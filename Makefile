@@ -74,7 +74,7 @@ OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
 OBJECTS_X86_64 = $(CCFILES:%.cc=%_x86_64.o)
 
 # We could import the sdk into the git repo if we really wanted.
-NACL_SDK_ROOT = /Projects/native_client_sdk_0_1_507_1
+NACL_SDK_ROOT = ../..
 
 
 CFLAGS = -Wall -Wno-long-long -pthread -DXP_UNIX -Werror
