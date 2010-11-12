@@ -72,14 +72,22 @@ Time Time::FromExploded(bool is_local, const Exploded& exploded) {
   timestruct.tm_wday   = exploded.day_of_week;  // mktime/timegm ignore this
   timestruct.tm_yday   = 0;     // mktime/timegm ignore this
   timestruct.tm_isdst  = -1;    // attempt to figure it out
+#if !defined(OS_NACL)
   timestruct.tm_gmtoff = 0;     // not a POSIX field, so mktime/timegm ignore
   timestruct.tm_zone   = NULL;  // not a POSIX field, so mktime/timegm ignore
+#endif
 
   time_t seconds;
   if (is_local)
     seconds = mktime(&timestruct);
   else
+#if defined(OS_NACL)
+    // NaCl doesn't have timegm, no clue what to do here.
+    CHECK(false);
+    seconds = 0;
+#else
     seconds = timegm(&timestruct);
+#endif
 
   int64 milliseconds;
   // Handle overflow.  Clamping the range to what mktime and timegm might
@@ -164,6 +172,12 @@ TimeTicks TimeTicks::Now() {
       (static_cast<int64>(ts.tv_nsec) / Time::kNanosecondsPerMicrosecond);
 
   return TimeTicks(absolute_micro);
+}
+
+#elif defined(OS_NACL)
+// Wow, this is a huge hack.
+TimeTicks TimeTicks::Now() {
+  return TimeTicks(clock());
 }
 
 #else  // _POSIX_MONOTONIC_CLOCK

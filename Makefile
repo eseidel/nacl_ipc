@@ -47,6 +47,18 @@ CCFILES = hello_world_module.cc \
           base/tracked.cc \
           base/tracked_objects.cc \
           base/debug/debugger.cc \
+          base/values.cc \
+          base/json/json_reader.cc \
+          base/json/json_writer.cc \
+          base/lazy_instance.cc \
+          base/waitable_event_posix.cc \
+          base/waitable_event_watcher_posix.cc \
+          base/thread_local_storage_posix.cc \
+          base/json/string_escape.cc \
+          base/condition_variable_posix.cc \
+          base/safe_strerror_posix.cc \
+          base/time_posix.cc \
+          base/sys_string_conversions_linux.cc \
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
