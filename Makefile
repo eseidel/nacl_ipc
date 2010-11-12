@@ -6,9 +6,7 @@
 
 .PHONY: all clean
 
-CCFILES = hello_world_module.cc \
-          hello_world.cc \
-          npp_gate.cc \
+CCFILES = hello_world.cc \
           base/atomicops_internals_x86_gcc.cc \
           base/at_exit.cc \
           base/base_switches.cc \
@@ -97,6 +95,10 @@ hello_world_x86_32.nexe: $(OBJECTS_X86_32)
 
 hello_world_x86_64.nexe: $(OBJECTS_X86_64)
 	$(CPP) $^ $(LDFLAGS) -m64 -o $@
+
+run:
+	# Remove the "-c" once the compiled binary passes validation!
+	$(NACL_SDK_ROOT)/toolchain/mac_x86/bin/sel_ldr -c -- hello_world_x86_32.nexe
 
 clean:
 	-$(RM) $(OBJECTS_X86_32) $(OBJECTS_X86_64) \
