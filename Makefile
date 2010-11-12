@@ -9,59 +9,61 @@
 CCFILES = hello_world_module.cc \
           hello_world.cc \
           npp_gate.cc \
-          ipc/ipc_switches.cc \
+          base/atomicops_internals_x86_gcc.cc \
+          base/at_exit.cc \
+          base/base_switches.cc \
+          base/command_line.cc \
+          base/condition_variable_posix.cc \
+          base/debug/debugger.cc \
+          base/debug/stack_trace.cc \
+          base/file_path.cc \
+          base/json/json_reader.cc \
+          base/json/json_writer.cc \
+          base/json/string_escape.cc \
+          base/lazy_instance.cc \
+          base/lock.cc \
+          base/lock_impl_posix.cc \
+          base/logging.cc \
+          base/message_loop_nacl.cc \
+          base/pickle.cc \
+          base/platform_thread_posix.cc \
+          base/ref_counted.cc \
+          base/ref_counted_memory.cc \
+          base/safe_strerror_posix.cc \
+          base/string16.cc \
+          base/stringprintf.cc \
+          base/string_number_conversions.cc \
+          base/string_piece.cc \
+          base/string_split.cc \
+          base/string_util.cc \
+          base/sys_string_conversions_linux.cc \
+          base/task.cc \
+          base/task_queue.cc \
+          base/third_party/dmg_fp/dtoa.cc \
+          base/third_party/dmg_fp/g_fmt.cc \
+          base/thread_collision_warner.cc \
+          base/thread_local_posix.cc \
+          base/thread_local_storage_posix.cc \
+          base/time.cc \
+          base/time_posix.cc \
+          base/tracked.cc \
+          base/tracked_objects.cc \
+          base/utf_string_conversions.cc \
+          base/utf_string_conversion_utils.cc \
+          base/values.cc \
+          base/vlog.cc \
+          base/waitable_event_posix.cc \
+          base/waitable_event_watcher_posix.cc \
           ipc/file_descriptor_set_posix.cc \
           ipc/ipc_channel_proxy.cc \
           ipc/ipc_logging.cc \
           ipc/ipc_message.cc \
           ipc/ipc_message_utils.cc \
+          ipc/ipc_switches.cc \
           ipc/ipc_sync_channel.cc \
           ipc/ipc_sync_message.cc \
           ipc/ipc_sync_message_filter.cc \
-          base/logging.cc \
-          base/lock.cc \
-          base/lock_impl_posix.cc \
-          base/command_line.cc \
-          base/base_switches.cc \
-          base/file_path.cc \
-          base/utf_string_conversions.cc \
-          base/pickle.cc \
-          base/ref_counted.cc \
-          base/task.cc \
-          base/task_queue.cc \
-          base/string16.cc \
-          base/platform_thread_posix.cc \
-          base/string_number_conversions.cc \
-          base/utf_string_conversion_utils.cc \
-          base/string_util.cc \
-          base/stringprintf.cc \
-          base/string_piece.cc \
-          base/ref_counted_memory.cc \
-          base/thread_local_posix.cc \
-          base/debug/stack_trace.cc \
-          base/time.cc \
-          base/atomicops_internals_x86_gcc.cc \
-          base/at_exit.cc \
-          base/third_party/dmg_fp/dtoa.cc \
-          base/third_party/dmg_fp/g_fmt.cc \
-          base/tracked.cc \
-          base/tracked_objects.cc \
-          base/debug/debugger.cc \
-          base/values.cc \
-          base/json/json_reader.cc \
-          base/json/json_writer.cc \
-          base/lazy_instance.cc \
-          base/waitable_event_posix.cc \
-          base/waitable_event_watcher_posix.cc \
-          base/thread_local_storage_posix.cc \
-          base/json/string_escape.cc \
-          base/condition_variable_posix.cc \
-          base/safe_strerror_posix.cc \
-          base/time_posix.cc \
-          base/sys_string_conversions_linux.cc \
-          base/thread_collision_warner.cc \
-          base/string_split.cc \
-          base/vlog.cc \
+          ipc/ipc_channel_nacl.cc \
 
 
 
