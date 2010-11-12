@@ -59,6 +59,10 @@ CCFILES = hello_world_module.cc \
           base/safe_strerror_posix.cc \
           base/time_posix.cc \
           base/sys_string_conversions_linux.cc \
+          base/thread_collision_warner.cc \
+          base/string_split.cc \
+          base/vlog.cc \
+
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)

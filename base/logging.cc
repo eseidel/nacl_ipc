@@ -171,7 +171,11 @@ void DeleteFilePath(const PathString& log_name) {
 #if defined(OS_WIN)
   DeleteFile(log_name.c_str());
 #else
+#if defined(OS_NACL)
+  CHECK(false);
+#else
   unlink(log_name.c_str());
+#endif
 #endif
 }
 

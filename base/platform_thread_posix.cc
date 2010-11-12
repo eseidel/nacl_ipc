@@ -4,9 +4,6 @@
 
 #include "base/platform_thread.h"
 
-#if !defined(OS_NACL)
-#include <dlfcn.h>
-#endif
 #include <errno.h>
 #include <sched.h>
 
@@ -17,6 +14,7 @@
 #endif
 
 #if defined(OS_LINUX)
+#include <dlfcn.h>
 #include <sys/prctl.h>
 #include <sys/syscall.h>
 #include <unistd.h>
