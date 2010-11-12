@@ -177,7 +177,7 @@ TimeTicks TimeTicks::Now() {
 #elif defined(OS_NACL)
 // Wow, this is a huge hack.
 TimeTicks TimeTicks::Now() {
-  return TimeTicks(clock());
+  return TimeTicks(0);
 }
 
 #else  // _POSIX_MONOTONIC_CLOCK

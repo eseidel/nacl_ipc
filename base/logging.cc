@@ -145,8 +145,8 @@ uint64 TickCount() {
   return mach_absolute_time();
 #elif defined(OS_NACL)
   // NaCl sadly does not have _POSIX_TIMERS enabled in sys/features.h
-  // So we have to use clock() for now.
-  return clock();
+  // We also can't use clock() because it results in a link error!
+  return 0;
 #elif defined(OS_POSIX)
   struct timespec ts;
   clock_gettime(CLOCK_MONOTONIC, &ts);
