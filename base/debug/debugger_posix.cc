@@ -3,13 +3,16 @@
 // found in the LICENSE file.
 
 #include "base/debug/debugger.h"
+#include "build/build_config.h"
 
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#if !defined(OS_NACL)
 #include <sys/sysctl.h>
+#endif
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -27,7 +30,6 @@
 #include <iostream>
 
 #include "base/basictypes.h"
-#include "base/compat_execinfo.h"
 #include "base/eintr_wrapper.h"
 #include "base/logging.h"
 #include "base/safe_strerror_posix.h"
@@ -123,6 +125,13 @@ bool BeingDebugged() {
   // Our pid is 0 without a debugger, assume this for any pid starting with 0.
   pid_index += tracer.size();
   return pid_index < status.size() && status[pid_index] != '0';
+}
+
+#elif defined(OS_NACL)
+
+bool BeingDebugged() {
+  NOTIMPLEMENTED();
+  return false;
 }
 
 #elif defined(OS_FREEBSD)

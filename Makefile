@@ -64,7 +64,10 @@ CCFILES = hello_world_module.cc \
           ipc/ipc_sync_message.cc \
           ipc/ipc_sync_message_filter.cc \
           ipc/ipc_channel_nacl.cc \
-
+          base/debug/debugger_posix.cc \
+          base/debug/stack_trace_nacl.cc \
+          base/third_party/icu/icu_utf.cc \
+          base/third_party/nspr/prtime.cc \
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
