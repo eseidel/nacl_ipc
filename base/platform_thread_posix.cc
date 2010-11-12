@@ -4,7 +4,9 @@
 
 #include "base/platform_thread.h"
 
+#if !defined(OS_NACL)
 #include <dlfcn.h>
+#endif
 #include <errno.h>
 #include <sched.h>
 
@@ -18,6 +20,10 @@
 #include <sys/prctl.h>
 #include <sys/syscall.h>
 #include <unistd.h>
+#endif
+
+#if defined(OS_NACL)
+#include <sys/nacl_syscalls.h>
 #endif
 
 #include "base/logging.h"
@@ -47,6 +53,8 @@ PlatformThreadId PlatformThread::CurrentId() {
 #elif defined(OS_FREEBSD)
   // TODO(BSD): find a better thread ID
   return reinterpret_cast<int64>(pthread_self());
+#elif defined(OS_NACL)
+  return pthread_self();
 #endif
 }
 

@@ -25,12 +25,29 @@ CCFILES = hello_world_module.cc \
           base/base_switches.cc \
           base/file_path.cc \
           base/utf_string_conversions.cc \
-          
-#          ipc/ipc_message.cc
+          base/pickle.cc \
+          base/ref_counted.cc \
+          base/task.cc \
+          base/task_queue.cc \
+          base/string16.cc \
+          base/platform_thread_posix.cc \
+          base/string_number_conversions.cc \
+          base/utf_string_conversion_utils.cc \
+          base/string_util.cc \
+          base/stringprintf.cc \
+          base/string_piece.cc \
+          base/ref_counted_memory.cc \
+          base/thread_local_posix.cc \
+          base/debug/stack_trace.cc \
+          base/time.cc \
+          base/atomicops_internals_x86_gcc.cc \
+          base/at_exit.cc \
+          base/third_party/dmg_fp/dtoa.cc \
+          base/third_party/dmg_fp/g_fmt.cc \
+          base/tracked.cc \
+          base/tracked_objects.cc \
+          base/debug/debugger.cc \
 
-#          ipc/ipc_channel_posix.cc \ # sys/socket.h and sys/un.h
-#          ipc/ipc_logging.cc \ # Link errors due to missing logging
-          
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
 OBJECTS_X86_64 = $(CCFILES:%.cc=%_x86_64.o)
