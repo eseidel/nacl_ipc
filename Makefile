@@ -10,7 +10,21 @@ CCFILES = hello_world_module.cc \
           hello_world.cc \
           npp_gate.cc \
           ipc/ipc_switches.cc \
+          ipc/file_descriptor_set_posix.cc \
+          ipc/ipc_channel_proxy.cc \
+          ipc/ipc_logging.cc \
+          ipc/ipc_message.cc \
+          ipc/ipc_message_utils.cc \
+          ipc/ipc_sync_channel.cc \
+          ipc/ipc_sync_message.cc \
+          ipc/ipc_sync_message_filter.cc \
           base/logging.cc \
+          base/lock.cc \
+          base/lock_impl_posix.cc \
+          base/command_line.cc \
+          base/base_switches.cc \
+          base/file_path.cc \
+          base/utf_string_conversions.cc \
           
 #          ipc/ipc_message.cc
 
