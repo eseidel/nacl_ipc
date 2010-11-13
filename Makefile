@@ -66,6 +66,7 @@ CCFILES = hello_world.cc \
           base/debug/stack_trace_nacl.cc \
           base/third_party/icu/icu_utf.cc \
           base/third_party/nspr/prtime.cc \
+          testing/gtest/src/gtest-all.cc \
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
@@ -78,12 +79,16 @@ OBJECTS_X86_64 = $(CCFILES:%.cc=%_x86_64.o)
 NACL_SDK_ROOT ?= ../..
 
 CFLAGS = -Wall -Wno-long-long -pthread -DXP_UNIX -Werror
+TESTING_INCLUDES = -I$(CURDIR)/testing/gtest \
+                   -I$(CURDIR)/testing/gtest/include
 INCLUDES = -I$(CURDIR) \
-           -I$(NACL_SDK_ROOT)
+           -I$(NACL_SDK_ROOT) \
+           $(TESTING_INCLUDES)
 LDFLAGS = -lgoogle_nacl_imc \
           -lgoogle_nacl_npruntime \
           -lpthread \
           -lsrpc \
+          -lnosys \
           $(ARCH_FLAGS)
 OPT_FLAGS = -O2
 

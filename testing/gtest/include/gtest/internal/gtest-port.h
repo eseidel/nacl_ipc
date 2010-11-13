@@ -222,6 +222,8 @@
 #endif  // _WIN32_WCE
 #elif defined __APPLE__
 #define GTEST_OS_MAC 1
+#elif defined __native_client__
+#define GTEST_OS_NACL 1
 #elif defined __linux__
 #define GTEST_OS_LINUX 1
 #elif defined __MVS__
@@ -240,7 +242,9 @@
 // is not the case, we need to include headers that provide the functions
 // mentioned above.
 #include <unistd.h>
+#if !GTEST_OS_NACL
 #include <strings.h>
+#endif
 #elif !GTEST_OS_WINDOWS_MOBILE
 #include <direct.h>
 #include <io.h>
