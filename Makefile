@@ -19,10 +19,15 @@ CCFILES = hello_world.cc \
           base/debug/debugger_posix.cc \
           base/debug/stack_trace.cc \
           base/debug/stack_trace_nacl.cc \
+          base/debug/stack_trace_unittest.cc \
           base/file_path.cc \
+          base/file_path_unittest.cc \
           base/json/json_reader.cc \
+          base/json/json_reader_unittest.cc \
           base/json/json_writer.cc \
+          base/json/json_writer_unittest.cc \
           base/json/string_escape.cc \
+          base/json/string_escape_unittest.cc \
           base/lazy_instance.cc \
           base/lock.cc \
           base/lock_impl_posix.cc \
@@ -82,6 +87,8 @@ CCFILES = hello_world.cc \
           base/metrics/histogram.cc \
           base/message_loop_proxy.cc \
           base/message_loop_proxy_impl.cc \
+
+          # base/condition_variable_unittest.cc HANGS
 
 
 # Hangs, sadly.
