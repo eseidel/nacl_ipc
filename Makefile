@@ -45,10 +45,13 @@ CCFILES = hello_world.cc \
           base/string16_unittest.cc \
           base/stringprintf.cc \
           base/string_number_conversions.cc \
+          base/string_number_conversions_unittest.cc \
           base/string_piece.cc \
+          base/string_piece_unittest.cc \
           base/string_split.cc \
           base/string_util.cc \
           base/sys_string_conversions_linux.cc \
+          base/sys_string_conversions_unittest.cc \
           base/task.cc \
           base/task_queue.cc \
           base/third_party/dmg_fp/dtoa.cc \
@@ -62,7 +65,9 @@ CCFILES = hello_world.cc \
           base/time_posix.cc \
           base/tracked.cc \
           base/tracked_objects.cc \
+          base/tracked_objects_unittest.cc \
           base/utf_string_conversions.cc \
+          base/utf_string_conversions_unittest.cc \
           base/utf_string_conversion_utils.cc \
           base/values.cc \
           base/vlog.cc \
@@ -96,6 +101,9 @@ CCFILES = hello_world.cc \
           # base/lazy_instance_unittest.cc LINK_ERROR
           # base/lock_unittest.cc HANGS
           # base/logging_unittest.cc COMPILE_ERROR
+          # base/thread_local_unittest.cc LINK_ERROR
+          # base/thread_local_storage_unittest.cc LINK_ERROR
+          # base/time_unittest.cc CRASH
 
 # Hangs, sadly.
 #          ipc/ipc_sync_channel_unittest.cc \
@@ -109,6 +117,12 @@ CCFILES = hello_world.cc \
 
 # Depends on EnableTerminationOnHeapDestruction (in process_util)
 #          base/test/test_suite.cc \
+
+# Requires gmock.h
+#          base/string_split_unittest.cc \
+#          base/string_util_unittest.cc \
+
+
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
