@@ -78,15 +78,12 @@ CCFILES = hello_world.cc \
           testing/gtest/src/gtest-test-part.cc \
           testing/gtest/src/gtest-typed-test.cc \
           testing/gtest/src/gtest.cc \
-
-
-# Needs a few more symbols.
-#          ipc/ipc_sync_channel_unittest.cc \
-#          ipc/ipc_sync_message_unittest.cc \
-
-
-# Needs ~MessageLoop()
-#          base/thread.cc \
+          base/thread.cc \
+          base/metrics/histogram.cc \
+          base/message_loop_proxy.cc \
+          base/message_loop_proxy_impl.cc \
+          ipc/ipc_sync_channel_unittest.cc \
+          ipc/ipc_sync_message_unittest.cc \
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
