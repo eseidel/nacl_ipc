@@ -67,6 +67,7 @@ CCFILES = hello_world.cc \
           base/third_party/icu/icu_utf.cc \
           base/third_party/nspr/prtime.cc \
           testing/gtest/src/gtest-all.cc \
+          ipc/ipc_message_unittest.cc \
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
