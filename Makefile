@@ -75,6 +75,10 @@ CCFILES = hello_world.cc \
           testing/gtest/src/gtest-test-part.cc \
           testing/gtest/src/gtest-typed-test.cc \
           testing/gtest/src/gtest.cc \
+          base/thread.cc \
+          base/metrics/histogram.cc \
+          base/message_loop_proxy.cc \
+          base/message_loop_proxy_impl.cc \
 
 
 # Needs a few more symbols.
@@ -83,7 +87,6 @@ CCFILES = hello_world.cc \
 
 
 # Needs ~MessageLoop()
-#          base/thread.cc \
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)

@@ -3,12 +3,39 @@
 // found in the LICENSE file.
 
 #include "base/message_loop.h"
+#include "base/metrics/histogram.h"
+
+MessageLoop::MessageLoop(Type) {
+  NOTIMPLEMENTED();
+}
+
+MessageLoop::~MessageLoop() {
+  NOTIMPLEMENTED();
+}
 
 void MessageLoop::AddDestructionObserver(DestructionObserver*) {
   NOTIMPLEMENTED();
 }
 
-bool MessageLoop::NestableTasksAllowed() const {
+void MessageLoop::RemoveDestructionObserver(DestructionObserver*) {
+  NOTIMPLEMENTED();
+}
+
+MessageLoop::DestructionObserver::~DestructionObserver() {
+  NOTIMPLEMENTED();
+}
+
+bool MessageLoop::DoWork() {
+  NOTIMPLEMENTED();
+  return false;
+}
+
+bool MessageLoop::DoDelayedWork(base::TimeTicks*) {
+  NOTIMPLEMENTED();
+  return false;
+}
+
+bool MessageLoop::DoIdleWork() {
   NOTIMPLEMENTED();
   return false;
 }
@@ -21,16 +48,29 @@ void MessageLoop::PostTask(const tracked_objects::Location&, Task*) {
   NOTIMPLEMENTED();
 }
 
-void MessageLoop::QuitNow() {
+void MessageLoop::PostNonNestableTask(tracked_objects::Location const&, Task*) {
   NOTIMPLEMENTED();
 }
 
-void MessageLoop::RemoveDestructionObserver(DestructionObserver*) {
+void MessageLoop::PostNonNestableDelayedTask(tracked_objects::Location const&, Task*, long long) {
   NOTIMPLEMENTED();
 }
 
 void MessageLoop::Run() {
   NOTIMPLEMENTED();
+}
+
+void MessageLoop::Quit() {
+  NOTIMPLEMENTED();
+}
+
+void MessageLoop::QuitNow() {
+  NOTIMPLEMENTED();
+}
+
+bool MessageLoop::NestableTasksAllowed() const {
+  NOTIMPLEMENTED();
+  return false;
 }
 
 void MessageLoop::SetNestableTasksAllowed(bool) {
@@ -42,6 +82,7 @@ MessageLoop* MessageLoop::current() {
   return 0;
 }
 
-MessageLoop::DestructionObserver::~DestructionObserver() {
+bool MessageLoop::PendingTask::operator<(const PendingTask&) const {
   NOTIMPLEMENTED();
+  return false;
 }
