@@ -9,6 +9,7 @@
 CCFILES = hello_world.cc \
           base/atomicops_internals_x86_gcc.cc \
           base/at_exit.cc \
+          base/at_exit_unittest.cc \
           base/base_switches.cc \
           base/command_line.cc \
           base/condition_variable_posix.cc \
@@ -95,7 +96,7 @@ OBJECTS_X86_64 = $(CCFILES:%.cc=%_x86_64.o)
 # that they passed NACL_SDK_ROOT to make.
 NACL_SDK_ROOT ?= ../..
 
-CFLAGS = -Wall -Wno-long-long -pthread -DXP_UNIX -Werror
+CFLAGS = -Wall -Wno-long-long -pthread -DXP_UNIX -Werror -DUNIT_TEST
 TESTING_INCLUDES = -I$(CURDIR)/testing/gtest \
                    -I$(CURDIR)/testing/gtest/include
 INCLUDES = -I$(CURDIR) \
