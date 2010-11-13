@@ -6,7 +6,7 @@
 
 .PHONY: all clean
 
-CCFILES = hello_world.cc \
+BASE_FILES = \
           base/atomicops_internals_x86_gcc.cc \
           base/atomicops_unittest.cc \
           base/at_exit.cc \
@@ -33,13 +33,17 @@ CCFILES = hello_world.cc \
           base/lock_impl_posix.cc \
           base/logging.cc \
           base/message_loop_nacl.cc \
+          base/message_loop_proxy.cc \
+          base/message_loop_proxy_impl.cc \
+          base/metrics/histogram.cc \
+          base/metrics/histogram_unittest.cc \
           base/pickle.cc \
           base/pickle_unittest.cc \
           base/platform_thread_posix.cc \
           base/platform_thread_unittest.cc \
           base/ref_counted.cc \
-          base/ref_counted_unittest.cc \
           base/ref_counted_memory.cc \
+          base/ref_counted_unittest.cc \
           base/safe_strerror_posix.cc \
           base/string16.cc \
           base/string16_unittest.cc \
@@ -58,6 +62,7 @@ CCFILES = hello_world.cc \
           base/third_party/dmg_fp/g_fmt.cc \
           base/third_party/icu/icu_utf.cc \
           base/third_party/nspr/prtime.cc \
+          base/thread.cc \
           base/thread_collision_warner.cc \
           base/thread_local_posix.cc \
           base/thread_local_storage_posix.cc \
@@ -75,6 +80,9 @@ CCFILES = hello_world.cc \
           base/vlog_unittest.cc \
           base/waitable_event_posix.cc \
           base/waitable_event_watcher_posix.cc \
+
+
+IPC_FILES = \
           ipc/file_descriptor_set_posix.cc \
           ipc/file_descriptor_set_posix_unittest.cc \
           ipc/ipc_channel_nacl.cc \
@@ -87,6 +95,8 @@ CCFILES = hello_world.cc \
           ipc/ipc_sync_channel.cc \
           ipc/ipc_sync_message.cc \
           ipc/ipc_sync_message_filter.cc \
+
+TESTING_FILES = \
           testing/gtest/src/gtest-death-test.cc \
           testing/gtest/src/gtest-filepath.cc \
           testing/gtest/src/gtest-port.cc \
@@ -94,11 +104,11 @@ CCFILES = hello_world.cc \
           testing/gtest/src/gtest-test-part.cc \
           testing/gtest/src/gtest-typed-test.cc \
           testing/gtest/src/gtest.cc \
-          base/thread.cc \
-          base/metrics/histogram.cc \
-          base/metrics/histogram_unittest.cc \
-          base/message_loop_proxy.cc \
-          base/message_loop_proxy_impl.cc \
+
+CCFILES = hello_world.cc \
+          $(BASE_FILES) \
+          $(IPC_FILES) \
+          $(TESTING_FILES) \
 
           # base/condition_variable_unittest.cc HANGS
           # base/lazy_instance_unittest.cc LINK_ERROR
