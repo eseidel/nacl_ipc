@@ -146,8 +146,7 @@ hello_world_x86_64.nexe: $(OBJECTS_X86_64)
 	$(CPP) $^ $(LDFLAGS) -m64 -o $@
 
 run:
-	# Remove the "-c" once the compiled binary passes validation!
-	$(LDR) -c -- hello_world_x86_32.nexe
+	$(LDR) -- hello_world_x86_32.nexe
 
 clean:
 	-$(RM) $(OBJECTS_X86_32) $(OBJECTS_X86_64) \

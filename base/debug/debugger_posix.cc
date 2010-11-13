@@ -160,6 +160,10 @@ bool DebugUtil::BeingDebugged() {
 
 #if defined(NDEBUG) && !defined(OS_MACOSX)
 #define DEBUG_BREAK() abort()
+#elif defined(OS_NACL)
+// The NaCl verifier doesn't let use use int3.  For now, we call abort().  We
+// should ask for advice from some NaCl experts about the optimum thing here.
+#define DEBUG_BREAK() abort()
 #elif defined(ARCH_CPU_ARM_FAMILY)
 #define DEBUG_BREAK() asm("bkpt 0")
 #else
