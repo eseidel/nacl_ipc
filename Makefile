@@ -90,6 +90,13 @@ CCFILES = hello_world.cc \
 # Can't seem to link w/o ipc_sync_channel_unittest
 #          ipc/ipc_sync_message_unittest.cc \
 
+# Depends on MultiProcessTest (which makes no sense for NaCl)
+#          ipc/ipc_tests.cc \
+#          ipc/ipc_fuzzing_tests.cc \
+
+# Depends on EnableTerminationOnHeapDestruction (in process_util)
+#          base/test/test_suite.cc \
+
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
 OBJECTS_X86_64 = $(CCFILES:%.cc=%_x86_64.o)
