@@ -123,7 +123,7 @@ hello_world_x86_64.nexe: $(OBJECTS_X86_64)
 
 run:
 	# Remove the "-c" once the compiled binary passes validation!
-	$(NACL_SDK_ROOT)/toolchain/mac_x86/bin/sel_ldr -c -- hello_world_x86_32.nexe
+	$(LDR) -c -- hello_world_x86_32.nexe
 
 clean:
 	-$(RM) $(OBJECTS_X86_32) $(OBJECTS_X86_64) \
