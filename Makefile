@@ -70,7 +70,9 @@ CCFILES = hello_world.cc \
           base/utf_string_conversions_unittest.cc \
           base/utf_string_conversion_utils.cc \
           base/values.cc \
+          base/values_unittest.cc \
           base/vlog.cc \
+          base/vlog_unittest.cc \
           base/waitable_event_posix.cc \
           base/waitable_event_watcher_posix.cc \
           ipc/file_descriptor_set_posix.cc \
@@ -94,6 +96,7 @@ CCFILES = hello_world.cc \
           testing/gtest/src/gtest.cc \
           base/thread.cc \
           base/metrics/histogram.cc \
+          base/metrics/histogram_unittest.cc \
           base/message_loop_proxy.cc \
           base/message_loop_proxy_impl.cc \
 
@@ -104,6 +107,8 @@ CCFILES = hello_world.cc \
           # base/thread_local_unittest.cc LINK_ERROR
           # base/thread_local_storage_unittest.cc LINK_ERROR
           # base/time_unittest.cc CRASH
+          # base/waitable_event_unittest.cc CRASH
+          # base/thread_unittest.cc CRASH
 
 # Hangs, sadly.
 #          ipc/ipc_sync_channel_unittest.cc \
@@ -122,7 +127,10 @@ CCFILES = hello_world.cc \
 #          base/string_split_unittest.cc \
 #          base/string_util_unittest.cc \
 
-
+# Requires MessageLoop
+#          base/waitable_event_watcher_unittest.cc \
+#          base/message_loop_unittest.cc \
+#          base/message_loop_proxy_impl_unittest.cc \
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
