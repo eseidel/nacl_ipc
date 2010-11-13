@@ -13,7 +13,9 @@ CCFILES = hello_world.cc \
           base/command_line.cc \
           base/condition_variable_posix.cc \
           base/debug/debugger.cc \
+          base/debug/debugger_posix.cc \
           base/debug/stack_trace.cc \
+          base/debug/stack_trace_nacl.cc \
           base/file_path.cc \
           base/json/json_reader.cc \
           base/json/json_writer.cc \
@@ -39,6 +41,8 @@ CCFILES = hello_world.cc \
           base/task_queue.cc \
           base/third_party/dmg_fp/dtoa.cc \
           base/third_party/dmg_fp/g_fmt.cc \
+          base/third_party/icu/icu_utf.cc \
+          base/third_party/nspr/prtime.cc \
           base/thread_collision_warner.cc \
           base/thread_local_posix.cc \
           base/thread_local_storage_posix.cc \
@@ -53,27 +57,33 @@ CCFILES = hello_world.cc \
           base/waitable_event_posix.cc \
           base/waitable_event_watcher_posix.cc \
           ipc/file_descriptor_set_posix.cc \
+          ipc/file_descriptor_set_posix_unittest.cc \
+          ipc/ipc_channel_nacl.cc \
           ipc/ipc_channel_proxy.cc \
           ipc/ipc_logging.cc \
           ipc/ipc_message.cc \
+          ipc/ipc_message_unittest.cc \
           ipc/ipc_message_utils.cc \
           ipc/ipc_switches.cc \
           ipc/ipc_sync_channel.cc \
           ipc/ipc_sync_message.cc \
           ipc/ipc_sync_message_filter.cc \
-          ipc/ipc_channel_nacl.cc \
-          base/debug/debugger_posix.cc \
-          base/debug/stack_trace_nacl.cc \
-          base/third_party/icu/icu_utf.cc \
-          base/third_party/nspr/prtime.cc \
-          testing/gtest/src/gtest.cc \
           testing/gtest/src/gtest-death-test.cc \
           testing/gtest/src/gtest-filepath.cc \
           testing/gtest/src/gtest-port.cc \
           testing/gtest/src/gtest-printers.cc \
           testing/gtest/src/gtest-test-part.cc \
           testing/gtest/src/gtest-typed-test.cc \
-          ipc/ipc_message_unittest.cc \
+          testing/gtest/src/gtest.cc \
+
+
+# Needs a few more symbols.
+#          ipc/ipc_sync_channel_unittest.cc \
+#          ipc/ipc_sync_message_unittest.cc \
+
+
+# Needs ~MessageLoop()
+#          base/thread.cc \
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
