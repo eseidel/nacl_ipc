@@ -81,6 +81,27 @@ BASE_FILES = \
           base/waitable_event_posix.cc \
           base/waitable_event_watcher_posix.cc \
 
+          # base/condition_variable_unittest.cc HANGS
+          # base/lazy_instance_unittest.cc LINK_ERROR
+          # base/lock_unittest.cc HANGS
+          # base/logging_unittest.cc COMPILE_ERROR
+          # base/thread_local_unittest.cc LINK_ERROR
+          # base/thread_local_storage_unittest.cc LINK_ERROR
+          # base/time_unittest.cc CRASH
+          # base/waitable_event_unittest.cc CRASH
+          # base/thread_unittest.cc CRASH
+
+# Depends on EnableTerminationOnHeapDestruction (in process_util)
+#          base/test/test_suite.cc \
+
+# Requires gmock.h
+#          base/string_split_unittest.cc \
+#          base/string_util_unittest.cc \
+
+# Requires MessageLoop
+#          base/waitable_event_watcher_unittest.cc \
+#          base/message_loop_unittest.cc \
+#          base/message_loop_proxy_impl_unittest.cc \
 
 IPC_FILES = \
           ipc/file_descriptor_set_posix.cc \
@@ -96,6 +117,16 @@ IPC_FILES = \
           ipc/ipc_sync_message.cc \
           ipc/ipc_sync_message_filter.cc \
 
+# Hangs, sadly.
+#          ipc/ipc_sync_channel_unittest.cc \
+
+# Can't seem to link w/o ipc_sync_channel_unittest
+#          ipc/ipc_sync_message_unittest.cc \
+
+# Depends on MultiProcessTest (which makes no sense for NaCl)
+#          ipc/ipc_tests.cc \
+#          ipc/ipc_fuzzing_tests.cc \
+
 TESTING_FILES = \
           testing/gtest/src/gtest-death-test.cc \
           testing/gtest/src/gtest-filepath.cc \
@@ -110,42 +141,11 @@ CCFILES = hello_world.cc \
           $(IPC_FILES) \
           $(TESTING_FILES) \
 
-          # base/condition_variable_unittest.cc HANGS
-          # base/lazy_instance_unittest.cc LINK_ERROR
-          # base/lock_unittest.cc HANGS
-          # base/logging_unittest.cc COMPILE_ERROR
-          # base/thread_local_unittest.cc LINK_ERROR
-          # base/thread_local_storage_unittest.cc LINK_ERROR
-          # base/time_unittest.cc CRASH
-          # base/waitable_event_unittest.cc CRASH
-          # base/thread_unittest.cc CRASH
-
-# Hangs, sadly.
-#          ipc/ipc_sync_channel_unittest.cc \
-
-# Can't seem to link w/o ipc_sync_channel_unittest
-#          ipc/ipc_sync_message_unittest.cc \
-
-# Depends on MultiProcessTest (which makes no sense for NaCl)
-#          ipc/ipc_tests.cc \
-#          ipc/ipc_fuzzing_tests.cc \
-
-# Depends on EnableTerminationOnHeapDestruction (in process_util)
-#          base/test/test_suite.cc \
-
-# Requires gmock.h
-#          base/string_split_unittest.cc \
-#          base/string_util_unittest.cc \
-
-# Requires MessageLoop
-#          base/waitable_event_watcher_unittest.cc \
-#          base/message_loop_unittest.cc \
-#          base/message_loop_proxy_impl_unittest.cc \
-
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
 OBJECTS_X86_64 = $(CCFILES:%.cc=%_x86_64.o)
 
+PROJECT_NAME = ipc_test
 
 # We could import the sdk into the git repo if we really wanted.
 # for now, we assume that this is inside the examples folder or
@@ -166,26 +166,26 @@ LDFLAGS = -lgoogle_nacl_imc \
           $(ARCH_FLAGS)
 OPT_FLAGS = -O2
 
-all: check_variables hello_world_x86_32.nexe hello_world_x86_64.nexe
+all: check_variables $(PROJECT_NAME)_x86_32.nexe $(PROJECT_NAME)_x86_64.nexe
 
 # common.mk has rules to build .o files from .cc files.
 # common.mk comes from native_client_sdk_0_1_507_1/examples/common.mk
 include common.mk
 
-hello_world_x86_32.nexe: $(OBJECTS_X86_32)
+$(PROJECT_NAME)_x86_32.nexe: $(OBJECTS_X86_32)
 	$(CPP) $^ $(LDFLAGS) -m32 -o $@
 
-hello_world_x86_64.nexe: $(OBJECTS_X86_64)
+$(PROJECT_NAME)_x86_64.nexe: $(OBJECTS_X86_64)
 	$(CPP) $^ $(LDFLAGS) -m64 -o $@
 
 run:
-	$(LDR) -- hello_world_x86_32.nexe
+	$(LDR) -- $(PROJECT_NAME)_x86_32.nexe
 
 clean:
 	-$(RM) $(OBJECTS_X86_32) $(OBJECTS_X86_64) \
-	    hello_world_x86_32.nexe hello_world_x86_64.nexe
+	    $(PROJECT_NAME)_x86_32.nexe $(PROJECT_NAME)_x86_64.nexe
 
 # This target is used by the SDK build system to produce a pre-built version
 # of the .nexe.  You do not need to call this target.
-install_prebuilt: hello_world_x86_32.nexe hello_world_x86_64.nexe
+install_prebuilt: $(PROJECT_NAME)_x86_32.nexe $(PROJECT_NAME)_x86_64.nexe
 	-$(RM) $(OBJECTS_X86_32) $(OBJECTS_X86_64)
