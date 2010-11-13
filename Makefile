@@ -71,9 +71,11 @@ CCFILES = hello_world.cc \
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)
 OBJECTS_X86_64 = $(CCFILES:%.cc=%_x86_64.o)
 
-# We could import the sdk into the git repo if we really wanted.
-NACL_SDK_ROOT = ../..
 
+# We could import the sdk into the git repo if we really wanted.
+# for now, we assume that this is inside the examples folder or
+# that they passed NACL_SDK_ROOT to make.
+NACL_SDK_ROOT ?= ../..
 
 CFLAGS = -Wall -Wno-long-long -pthread -DXP_UNIX -Werror
 INCLUDES = -I$(CURDIR) \
@@ -88,7 +90,8 @@ OPT_FLAGS = -O2
 all: check_variables hello_world_x86_32.nexe hello_world_x86_64.nexe
 
 # common.mk has rules to build .o files from .cc files.
--include $(NACL_SDK_ROOT)/examples/common.mk
+# common.mk comes from native_client_sdk_0_1_507_1/examples/common.mk
+include common.mk
 
 hello_world_x86_32.nexe: $(OBJECTS_X86_32)
 	$(CPP) $^ $(LDFLAGS) -m32 -o $@
