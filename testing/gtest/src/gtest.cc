@@ -3841,7 +3841,11 @@ int UnitTest::Run() {
 // Returns the working directory when the first TEST() or TEST_F() was
 // executed.
 const char* UnitTest::original_working_dir() const {
+#if GTEST_HAS_DEATH_TEST
   return impl_->original_working_dir_.c_str();
+#else
+  return "";
+#endif
 }
 
 // Returns the TestCase object for the test that's currently running,

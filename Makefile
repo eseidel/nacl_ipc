@@ -66,7 +66,13 @@ CCFILES = hello_world.cc \
           base/debug/stack_trace_nacl.cc \
           base/third_party/icu/icu_utf.cc \
           base/third_party/nspr/prtime.cc \
-          testing/gtest/src/gtest-all.cc \
+          testing/gtest/src/gtest.cc \
+          testing/gtest/src/gtest-death-test.cc \
+          testing/gtest/src/gtest-filepath.cc \
+          testing/gtest/src/gtest-port.cc \
+          testing/gtest/src/gtest-printers.cc \
+          testing/gtest/src/gtest-test-part.cc \
+          testing/gtest/src/gtest-typed-test.cc \
           ipc/ipc_message_unittest.cc \
 
 
