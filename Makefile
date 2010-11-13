@@ -42,6 +42,7 @@ CCFILES = hello_world.cc \
           base/ref_counted_memory.cc \
           base/safe_strerror_posix.cc \
           base/string16.cc \
+          base/string16_unittest.cc \
           base/stringprintf.cc \
           base/string_number_conversions.cc \
           base/string_piece.cc \
