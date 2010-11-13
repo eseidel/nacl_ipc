@@ -19,18 +19,26 @@ CCFILES = hello_world.cc \
           base/debug/debugger_posix.cc \
           base/debug/stack_trace.cc \
           base/debug/stack_trace_nacl.cc \
+          base/debug/stack_trace_unittest.cc \
           base/file_path.cc \
+          base/file_path_unittest.cc \
           base/json/json_reader.cc \
+          base/json/json_reader_unittest.cc \
           base/json/json_writer.cc \
+          base/json/json_writer_unittest.cc \
           base/json/string_escape.cc \
+          base/json/string_escape_unittest.cc \
           base/lazy_instance.cc \
           base/lock.cc \
           base/lock_impl_posix.cc \
           base/logging.cc \
           base/message_loop_nacl.cc \
           base/pickle.cc \
+          base/pickle_unittest.cc \
           base/platform_thread_posix.cc \
+          base/platform_thread_unittest.cc \
           base/ref_counted.cc \
+          base/ref_counted_unittest.cc \
           base/ref_counted_memory.cc \
           base/safe_strerror_posix.cc \
           base/string16.cc \
@@ -83,6 +91,10 @@ CCFILES = hello_world.cc \
           base/message_loop_proxy.cc \
           base/message_loop_proxy_impl.cc \
 
+          # base/condition_variable_unittest.cc HANGS
+          # base/lazy_instance_unittest.cc LINK_ERROR
+          # base/lock_unittest.cc HANGS
+          # base/logging_unittest.cc COMPILE_ERROR
 
 # Hangs, sadly.
 #          ipc/ipc_sync_channel_unittest.cc \
