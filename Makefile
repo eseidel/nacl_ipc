@@ -79,14 +79,8 @@ CCFILES = hello_world.cc \
           base/metrics/histogram.cc \
           base/message_loop_proxy.cc \
           base/message_loop_proxy_impl.cc \
-
-
-# Needs a few more symbols.
-#          ipc/ipc_sync_channel_unittest.cc \
-#          ipc/ipc_sync_message_unittest.cc \
-
-
-# Needs ~MessageLoop()
+          ipc/ipc_sync_channel_unittest.cc \
+          ipc/ipc_sync_message_unittest.cc \
 
 
 OBJECTS_X86_32 = $(CCFILES:%.cc=%_x86_32.o)

@@ -60,6 +60,10 @@ void MessageLoop::Run() {
   NOTIMPLEMENTED();
 }
 
+void MessageLoop::RunAllPending() {
+  NOTIMPLEMENTED();
+}
+
 void MessageLoop::Quit() {
   NOTIMPLEMENTED();
 }
