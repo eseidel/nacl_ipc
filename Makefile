@@ -8,10 +8,12 @@
 
 CCFILES = hello_world.cc \
           base/atomicops_internals_x86_gcc.cc \
+          base/atomicops_unittest.cc \
           base/at_exit.cc \
           base/at_exit_unittest.cc \
           base/base_switches.cc \
           base/command_line.cc \
+          base/command_line_unittest.cc \
           base/condition_variable_posix.cc \
           base/debug/debugger.cc \
           base/debug/debugger_posix.cc \
