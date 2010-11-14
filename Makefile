@@ -155,8 +155,10 @@ NACL_SDK_ROOT ?= ../..
 CFLAGS = -Wall -Wno-long-long -pthread -DXP_UNIX -Werror -DUNIT_TEST
 TESTING_INCLUDES = -I$(CURDIR)/testing/gtest \
                    -I$(CURDIR)/testing/gtest/include
+PPAPI_C_INCLUDES = -I$(CURDIR)/ppapi/c
 INCLUDES = -I$(CURDIR) \
            -I$(NACL_SDK_ROOT) \
+           $(PPAPI_C_INCLUDES) \
            $(TESTING_INCLUDES)
 LDFLAGS = -lgoogle_nacl_imc \
           -lgoogle_nacl_npruntime \
