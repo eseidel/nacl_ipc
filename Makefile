@@ -81,6 +81,39 @@ BASE_FILES = \
           base/waitable_event_posix.cc \
           base/waitable_event_watcher_posix.cc \
 
+          # ppapi/proxy/callback_tracker.cc \
+          # ppapi/proxy/dispatcher.cc \
+          # ppapi/proxy/host_dispatcher.cc \
+          # ppapi/proxy/host_var_serialization_rules.cc \
+          # ppapi/proxy/interface_proxy.cc \
+          # ppapi/proxy/plugin_dispatcher.cc \
+          # ppapi/proxy/plugin_resource.cc \
+          # ppapi/proxy/plugin_resource_tracker.cc \
+          # ppapi/proxy/plugin_var_serialization_rules.cc \
+          # ppapi/proxy/plugin_var_tracker.cc \
+          # ppapi/proxy/ppapi_messages.cc \
+          # ppapi/proxy/ppb_buffer_proxy.cc \
+          # ppapi/proxy/ppb_char_set_proxy.cc \
+          # ppapi/proxy/ppb_cursor_control_proxy.cc \
+          # ppapi/proxy/ppb_flash_proxy.cc \
+          # ppapi/proxy/ppb_font_proxy.cc \
+          # ppapi/proxy/ppb_fullscreen_proxy.cc \
+          # ppapi/proxy/ppb_graphics_2d_proxy.cc \
+          # ppapi/proxy/ppb_image_data_proxy.cc \
+          # ppapi/proxy/ppb_instance_proxy.cc \
+          # ppapi/proxy/ppb_pdf_proxy.cc \
+          # ppapi/proxy/ppb_url_request_info_proxy.cc \
+          # ppapi/proxy/ppb_url_response_info_proxy.cc \
+          # ppapi/proxy/ppb_var_deprecated_proxy.cc \
+          # ppapi/proxy/ppp_class_proxy.cc \
+          # ppapi/proxy/ppp_instance_proxy.cc \
+
+          # ppapi/proxy/ppapi_param_traits.cc COMPILE_ERROR
+          # ppapi/proxy/ppb_core_proxy.cc COMPILE_ERROR
+          # ppapi/proxy/ppb_testing_proxy.cc COMPILE_ERROR
+          # ppapi/proxy/ppb_url_loader_proxy.cc COMPILE_ERROR
+          # ppapi/proxy/serialized_var.cc COMPILE_ERROR
+
           # base/condition_variable_unittest.cc HANGS
           # base/lazy_instance_unittest.cc LINK_ERROR
           # base/lock_unittest.cc HANGS
