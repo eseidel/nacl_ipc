@@ -80,6 +80,17 @@ BASE_FILES = \
           base/vlog_unittest.cc \
           base/waitable_event_posix.cc \
           base/waitable_event_watcher_posix.cc \
+          base/time_unittest.cc \
+          base/logging_unittest.cc \
+
+
+# WaitableEventTest.WaitMany hits a DCHECK in LockImpl::Unlock
+# because the pthread_mutex_unlock is returning 1 (EPERM)
+#          base/waitable_event_unittest.cc \
+
+# ThreadTest.Restart expects an AtExitManager, but it's unclear who is supposed to provide one.
+# [1114/202650:FATAL:base/at_exit.cc(40)] Check failed: false. Tried to RegisterCallback without an AtExitManager
+          # base/thread_unittest.cc \
 
           # base/condition_variable_unittest.cc HANGS
           # base/lazy_instance_unittest.cc LINK_ERROR
@@ -87,9 +98,7 @@ BASE_FILES = \
           # base/logging_unittest.cc COMPILE_ERROR
           # base/thread_local_unittest.cc LINK_ERROR
           # base/thread_local_storage_unittest.cc LINK_ERROR
-          # base/time_unittest.cc CRASH
-          # base/waitable_event_unittest.cc CRASH
-          # base/thread_unittest.cc CRASH
+
 
 # Depends on EnableTerminationOnHeapDestruction (in process_util)
 #          base/test/test_suite.cc \
@@ -135,6 +144,11 @@ TESTING_FILES = \
           testing/gtest/src/gtest-test-part.cc \
           testing/gtest/src/gtest-typed-test.cc \
           testing/gtest/src/gtest.cc \
+          testing/gmock/src/gmock-cardinalities.cc \
+          testing/gmock/src/gmock-internal-utils.cc \
+          testing/gmock/src/gmock-matchers.cc \
+          testing/gmock/src/gmock-spec-builders.cc \
+          testing/gmock/src/gmock.cc \
 
 CCFILES = hello_world.cc \
           $(BASE_FILES) \
@@ -154,7 +168,8 @@ NACL_SDK_ROOT ?= ../..
 
 CFLAGS = -Wall -Wno-long-long -pthread -DXP_UNIX -Werror -DUNIT_TEST
 TESTING_INCLUDES = -I$(CURDIR)/testing/gtest \
-                   -I$(CURDIR)/testing/gtest/include
+                   -I$(CURDIR)/testing/gtest/include \
+                   -I$(CURDIR)/testing/gmock/include
 INCLUDES = -I$(CURDIR) \
            -I$(NACL_SDK_ROOT) \
            $(TESTING_INCLUDES)

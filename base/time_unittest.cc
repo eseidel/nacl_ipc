@@ -125,6 +125,12 @@ TEST(TimeTicks, HighResNow) {
     return;
 #endif
 
+#if defined(OS_NACL)
+  // This test just hangs for NaCl.  Unclear why.  Skipping for now.
+  EXPECT_TRUE(false);
+  return;
+#endif
+
   // Why do we loop here?
   // We're trying to measure that intervals increment in a VERY small amount
   // of time --  less than 15ms.  Unfortunately, if we happen to have a

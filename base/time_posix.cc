@@ -60,6 +60,26 @@ Time Time::NowFromSystemTime() {
   return Now();
 }
 
+#if defined(OS_NACL)
+#include <stdlib.h>
+// NaCl doesn't have timegm, so we use this hack for now.
+// http://code.google.com/p/nativeclient/issues/detail?id=1160
+static time_t my_timegm (struct tm *tm) {
+    time_t ret;
+    char *tz;
+    tz = getenv("TZ");
+    setenv("TZ", "", 1);
+    tzset();
+    ret = mktime(tm);
+    if (tz)
+        setenv("TZ", tz, 1);
+    else
+        unsetenv("TZ");
+    tzset();
+    return ret;
+}
+#endif
+
 // static
 Time Time::FromExploded(bool is_local, const Exploded& exploded) {
   struct tm timestruct;
@@ -82,9 +102,7 @@ Time Time::FromExploded(bool is_local, const Exploded& exploded) {
     seconds = mktime(&timestruct);
   else
 #if defined(OS_NACL)
-    // NaCl doesn't have timegm, no clue what to do here.
-    CHECK(false);
-    seconds = 0;
+    seconds = my_timegm(&timestruct);
 #else
     seconds = timegm(&timestruct);
 #endif
@@ -175,9 +193,11 @@ TimeTicks TimeTicks::Now() {
 }
 
 #elif defined(OS_NACL)
-// Wow, this is a huge hack.
 TimeTicks TimeTicks::Now() {
-  return TimeTicks(0);
+  // NaCl sadly does not have _POSIX_TIMERS enabled in sys/features.h
+  // Apparently NaCl only has CLOCK_REALTIME:
+  // http://code.google.com/p/nativeclient/issues/detail?id=1159
+  return TimeTicks(clock());
 }
 
 #else  // _POSIX_MONOTONIC_CLOCK

@@ -5,7 +5,9 @@
 #include "base/message_loop.h"
 #include "base/metrics/histogram.h"
 
-MessageLoop::MessageLoop(Type) {
+MessageLoop::MessageLoop(Type type)
+  : type_(type)
+{
   NOTIMPLEMENTED();
 }
 
@@ -82,8 +84,11 @@ void MessageLoop::SetNestableTasksAllowed(bool) {
 }
 
 MessageLoop* MessageLoop::current() {
+  // Just enough to make a few more unit tests not crash,
+  // but isn't a real implementation of this function.
+  static MessageLoop* sDummyLoop = new MessageLoop();
   NOTIMPLEMENTED();
-  return 0;
+  return sDummyLoop;
 }
 
 bool MessageLoop::PendingTask::operator<(const PendingTask&) const {
