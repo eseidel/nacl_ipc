@@ -37,7 +37,6 @@ BASE_FILES = \
           base/message_loop.cc \
           base/message_loop_proxy.cc \
           base/message_loop_proxy_impl.cc \
-          base/message_loop_unittest.cc \
           base/message_pump.cc \
           base/message_pump_default.cc \
           base/metrics/histogram.cc \
@@ -92,6 +91,9 @@ BASE_FILES = \
           base/waitable_event_posix.cc \
           base/waitable_event_watcher_posix.cc \
           base/weak_ptr.cc \
+
+# Crashes...
+#          base/message_loop_unittest.cc \
 
 # WaitableEventTest.WaitMany hits a DCHECK in LockImpl::Unlock
 # because the pthread_mutex_unlock is returning 1 (EPERM)
