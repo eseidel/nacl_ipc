@@ -88,6 +88,7 @@ BASE_FILES = \
           base/weak_ptr.cc \
           base/non_thread_safe.cc \
           base/thread_checker.cc \
+          base/lock_unittest.cc \
 
 # LockTest.TryLock hits: Check failed: rv == 0 || rv == EBUSY.
 #          base/lock_unittest.cc \

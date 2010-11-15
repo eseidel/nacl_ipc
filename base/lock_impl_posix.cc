@@ -33,7 +33,13 @@ LockImpl::~LockImpl() {
 
 bool LockImpl::Try() {
   int rv = pthread_mutex_trylock(&os_lock_);
+#if defined(OS_NACL)
+  // NaCl's trylock incorrectly returns -EBUSY
+  // http://code.google.com/p/nativeclient/issues/detail?id=1174
+  DCHECK(rv == 0 || rv == -EBUSY);
+#else
   DCHECK(rv == 0 || rv == EBUSY);
+#endif
   return rv == 0;
 }
 
