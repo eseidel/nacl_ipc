@@ -85,6 +85,9 @@ BASE_FILES = \
           base/string_split_unittest.cc \
           base/string_util_unittest.cc \
           base/simple_thread.cc \
+          base/weak_ptr.cc \
+          base/non_thread_safe.cc \
+          base/thread_checker.cc \
 
 # LockTest.TryLock hits: Check failed: rv == 0 || rv == EBUSY.
 #          base/lock_unittest.cc \
@@ -108,38 +111,38 @@ BASE_FILES = \
 # Depends on EnableTerminationOnHeapDestruction (in process_util)
 #          base/test/test_suite.cc \
 
-# ppapi/proxy/callback_tracker.cc \
-# ppapi/proxy/dispatcher.cc \
-# ppapi/proxy/host_dispatcher.cc \
-# ppapi/proxy/host_var_serialization_rules.cc \
-# ppapi/proxy/interface_proxy.cc \
-# ppapi/proxy/plugin_dispatcher.cc \
-# ppapi/proxy/plugin_resource.cc \
-# ppapi/proxy/plugin_resource_tracker.cc \
-# ppapi/proxy/plugin_var_serialization_rules.cc \
-# ppapi/proxy/plugin_var_tracker.cc \
-# ppapi/proxy/ppapi_messages.cc \
-# ppapi/proxy/ppb_buffer_proxy.cc \
-# ppapi/proxy/ppb_char_set_proxy.cc \
-# ppapi/proxy/ppb_cursor_control_proxy.cc \
-# ppapi/proxy/ppb_flash_proxy.cc \
-# ppapi/proxy/ppb_font_proxy.cc \
-# ppapi/proxy/ppb_fullscreen_proxy.cc \
-# ppapi/proxy/ppb_graphics_2d_proxy.cc \
-# ppapi/proxy/ppb_image_data_proxy.cc \
-# ppapi/proxy/ppb_instance_proxy.cc \
-# ppapi/proxy/ppb_pdf_proxy.cc \
-# ppapi/proxy/ppb_url_request_info_proxy.cc \
-# ppapi/proxy/ppb_url_response_info_proxy.cc \
-# ppapi/proxy/ppb_var_deprecated_proxy.cc \
-# ppapi/proxy/ppp_class_proxy.cc \
-# ppapi/proxy/ppp_instance_proxy.cc \
-
-# ppapi/proxy/ppapi_param_traits.cc COMPILE_ERROR
-# ppapi/proxy/ppb_core_proxy.cc COMPILE_ERROR
-# ppapi/proxy/ppb_testing_proxy.cc COMPILE_ERROR
-# ppapi/proxy/ppb_url_loader_proxy.cc COMPILE_ERROR
-# ppapi/proxy/serialized_var.cc COMPILE_ERROR
+PPAPI_FILES = \
+           ppapi/proxy/callback_tracker.cc \
+           ppapi/proxy/dispatcher.cc \
+           ppapi/proxy/host_dispatcher.cc \
+           ppapi/proxy/host_var_serialization_rules.cc \
+           ppapi/proxy/interface_proxy.cc \
+           ppapi/proxy/plugin_dispatcher.cc \
+           ppapi/proxy/plugin_resource.cc \
+           ppapi/proxy/plugin_resource_tracker.cc \
+           ppapi/proxy/plugin_var_serialization_rules.cc \
+           ppapi/proxy/plugin_var_tracker.cc \
+           ppapi/proxy/ppapi_messages.cc \
+           ppapi/proxy/ppb_buffer_proxy.cc \
+           ppapi/proxy/ppb_char_set_proxy.cc \
+           ppapi/proxy/ppb_cursor_control_proxy.cc \
+           ppapi/proxy/ppb_flash_proxy.cc \
+           ppapi/proxy/ppb_font_proxy.cc \
+           ppapi/proxy/ppb_fullscreen_proxy.cc \
+           ppapi/proxy/ppb_graphics_2d_proxy.cc \
+           ppapi/proxy/ppb_image_data_proxy.cc \
+           ppapi/proxy/ppb_instance_proxy.cc \
+           ppapi/proxy/ppb_pdf_proxy.cc \
+           ppapi/proxy/ppb_url_request_info_proxy.cc \
+           ppapi/proxy/ppb_url_response_info_proxy.cc \
+           ppapi/proxy/ppb_var_deprecated_proxy.cc \
+           ppapi/proxy/ppp_class_proxy.cc \
+           ppapi/proxy/ppp_instance_proxy.cc \
+           ppapi/proxy/serialized_var.cc \
+           ppapi/proxy/ppapi_param_traits.cc \
+           ppapi/proxy/ppb_core_proxy.cc \
+           ppapi/proxy/ppb_testing_proxy.cc \
+           ppapi/proxy/ppb_url_loader_proxy.cc \
 
 # base/condition_variable_unittest.cc HANGS
 # base/lazy_instance_unittest.cc LINK_ERROR
@@ -197,6 +200,7 @@ TESTING_FILES = \
 CCFILES = hello_world.cc \
           $(BASE_FILES) \
           $(IPC_FILES) \
+          $(PPAPI_FILES) \
           $(TESTING_FILES) \
 
 
