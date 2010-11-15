@@ -31,12 +31,15 @@ BASE_FILES = \
           base/lazy_instance.cc \
           base/lock.cc \
           base/lock_impl_posix.cc \
+          base/lock_unittest.cc \
           base/logging.cc \
+          base/logging_unittest.cc \
           base/message_loop_nacl.cc \
           base/message_loop_proxy.cc \
           base/message_loop_proxy_impl.cc \
           base/metrics/histogram.cc \
           base/metrics/histogram_unittest.cc \
+          base/non_thread_safe.cc \
           base/pickle.cc \
           base/pickle_unittest.cc \
           base/platform_thread_posix.cc \
@@ -45,6 +48,7 @@ BASE_FILES = \
           base/ref_counted_memory.cc \
           base/ref_counted_unittest.cc \
           base/safe_strerror_posix.cc \
+          base/simple_thread.cc \
           base/string16.cc \
           base/string16_unittest.cc \
           base/stringprintf.cc \
@@ -53,7 +57,9 @@ BASE_FILES = \
           base/string_piece.cc \
           base/string_piece_unittest.cc \
           base/string_split.cc \
+          base/string_split_unittest.cc \
           base/string_util.cc \
+          base/string_util_unittest.cc \
           base/sys_string_conversions_linux.cc \
           base/sys_string_conversions_unittest.cc \
           base/task.cc \
@@ -63,11 +69,13 @@ BASE_FILES = \
           base/third_party/icu/icu_utf.cc \
           base/third_party/nspr/prtime.cc \
           base/thread.cc \
+          base/thread_checker.cc \
           base/thread_collision_warner.cc \
           base/thread_local_posix.cc \
           base/thread_local_storage_posix.cc \
           base/time.cc \
           base/time_posix.cc \
+          base/time_unittest.cc \
           base/tracked.cc \
           base/tracked_objects.cc \
           base/tracked_objects_unittest.cc \
@@ -80,18 +88,7 @@ BASE_FILES = \
           base/vlog_unittest.cc \
           base/waitable_event_posix.cc \
           base/waitable_event_watcher_posix.cc \
-          base/time_unittest.cc \
-          base/logging_unittest.cc \
-          base/string_split_unittest.cc \
-          base/string_util_unittest.cc \
-          base/simple_thread.cc \
           base/weak_ptr.cc \
-          base/non_thread_safe.cc \
-          base/thread_checker.cc \
-          base/lock_unittest.cc \
-
-# LockTest.TryLock hits: Check failed: rv == 0 || rv == EBUSY.
-#          base/lock_unittest.cc \
 
 # WaitableEventTest.WaitMany hits a DCHECK in LockImpl::Unlock
 # because the pthread_mutex_unlock is returning 1 (EPERM)
@@ -112,6 +109,11 @@ BASE_FILES = \
 # Depends on EnableTerminationOnHeapDestruction (in process_util)
 #          base/test/test_suite.cc \
 
+# Requires MessageLoop
+#          base/waitable_event_watcher_unittest.cc \
+#          base/message_loop_unittest.cc \
+#          base/message_loop_proxy_impl_unittest.cc \
+
 PPAPI_FILES = \
            ppapi/proxy/callback_tracker.cc \
            ppapi/proxy/dispatcher.cc \
@@ -124,8 +126,10 @@ PPAPI_FILES = \
            ppapi/proxy/plugin_var_serialization_rules.cc \
            ppapi/proxy/plugin_var_tracker.cc \
            ppapi/proxy/ppapi_messages.cc \
+           ppapi/proxy/ppapi_param_traits.cc \
            ppapi/proxy/ppb_buffer_proxy.cc \
            ppapi/proxy/ppb_char_set_proxy.cc \
+           ppapi/proxy/ppb_core_proxy.cc \
            ppapi/proxy/ppb_cursor_control_proxy.cc \
            ppapi/proxy/ppb_flash_proxy.cc \
            ppapi/proxy/ppb_font_proxy.cc \
@@ -134,31 +138,14 @@ PPAPI_FILES = \
            ppapi/proxy/ppb_image_data_proxy.cc \
            ppapi/proxy/ppb_instance_proxy.cc \
            ppapi/proxy/ppb_pdf_proxy.cc \
+           ppapi/proxy/ppb_testing_proxy.cc \
+           ppapi/proxy/ppb_url_loader_proxy.cc \
            ppapi/proxy/ppb_url_request_info_proxy.cc \
            ppapi/proxy/ppb_url_response_info_proxy.cc \
            ppapi/proxy/ppb_var_deprecated_proxy.cc \
            ppapi/proxy/ppp_class_proxy.cc \
            ppapi/proxy/ppp_instance_proxy.cc \
            ppapi/proxy/serialized_var.cc \
-           ppapi/proxy/ppapi_param_traits.cc \
-           ppapi/proxy/ppb_core_proxy.cc \
-           ppapi/proxy/ppb_testing_proxy.cc \
-           ppapi/proxy/ppb_url_loader_proxy.cc \
-
-# base/condition_variable_unittest.cc HANGS
-# base/lazy_instance_unittest.cc LINK_ERROR
-# base/lock_unittest.cc HANGS
-# base/logging_unittest.cc COMPILE_ERROR
-# base/thread_local_unittest.cc LINK_ERROR
-# base/thread_local_storage_unittest.cc LINK_ERROR
-# base/time_unittest.cc CRASH
-# base/waitable_event_unittest.cc CRASH
-# base/thread_unittest.cc CRASH
-
-# Requires MessageLoop
-#          base/waitable_event_watcher_unittest.cc \
-#          base/message_loop_unittest.cc \
-#          base/message_loop_proxy_impl_unittest.cc \
 
 IPC_FILES = \
           ipc/file_descriptor_set_posix.cc \
