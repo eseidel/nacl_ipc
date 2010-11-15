@@ -4,10 +4,12 @@
 
 #include <stdio.h>
 
+#include "base/at_exit.h"
 #include "gtest/gtest.h"
 
 int main(int argc, char** argv) {
     printf("Hello, world.\n");
+    base::AtExitManager at_exit_manager;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
