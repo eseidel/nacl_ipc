@@ -34,9 +34,11 @@ BASE_FILES = \
           base/lock_unittest.cc \
           base/logging.cc \
           base/logging_unittest.cc \
-          base/message_loop_nacl.cc \
+          base/message_loop.cc \
           base/message_loop_proxy.cc \
           base/message_loop_proxy_impl.cc \
+          base/message_pump.cc \
+          base/message_pump_default.cc \
           base/metrics/histogram.cc \
           base/metrics/histogram_unittest.cc \
           base/non_thread_safe.cc \
