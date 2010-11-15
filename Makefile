@@ -84,22 +84,26 @@ BASE_FILES = \
           base/logging_unittest.cc \
           base/string_split_unittest.cc \
           base/string_util_unittest.cc \
+          base/simple_thread.cc \
+
+# LockTest.TryLock hits: Check failed: rv == 0 || rv == EBUSY.
+#          base/lock_unittest.cc \
 
 # WaitableEventTest.WaitMany hits a DCHECK in LockImpl::Unlock
 # because the pthread_mutex_unlock is returning 1 (EPERM)
 #          base/waitable_event_unittest.cc \
 # very similar DCHECK hit in ConditionVariableTest.MultiThreadConsumerTest:
 #          base/condition_variable_unittest.cc \
-
+# very similar DCHECK hit on ThreadLocalTest.Pointer:
+#          base/thread_local_unittest.cc \
+# very similar DCHECK hit on LazyInstanceTest.ConstructorThreadSafety:
+#          base/lazy_instance_unittest.cc \
+# very similar DCHECK hit on ThreadLocalStorageTest.TLSDestructors:
+#          base/thread_local_storage_unittest.cc \
 
 # ThreadTest.Restart expects an AtExitManager, but it's unclear who is supposed to provide one.
 # [1114/202650:FATAL:base/at_exit.cc(40)] Check failed: false. Tried to RegisterCallback without an AtExitManager
           # base/thread_unittest.cc \
-
-          # base/lazy_instance_unittest.cc LINK_ERROR
-          # base/lock_unittest.cc HANGS
-          # base/thread_local_unittest.cc LINK_ERROR
-          # base/thread_local_storage_unittest.cc LINK_ERROR
 
 # Depends on EnableTerminationOnHeapDestruction (in process_util)
 #          base/test/test_suite.cc \
