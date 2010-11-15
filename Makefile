@@ -37,6 +37,7 @@ BASE_FILES = \
           base/message_loop.cc \
           base/message_loop_proxy.cc \
           base/message_loop_proxy_impl.cc \
+          base/message_loop_unittest.cc \
           base/message_pump.cc \
           base/message_pump_default.cc \
           base/metrics/histogram.cc \
