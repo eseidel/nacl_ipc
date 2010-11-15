@@ -108,6 +108,49 @@ BASE_FILES = \
 # Depends on EnableTerminationOnHeapDestruction (in process_util)
 #          base/test/test_suite.cc \
 
+# ppapi/proxy/callback_tracker.cc \
+# ppapi/proxy/dispatcher.cc \
+# ppapi/proxy/host_dispatcher.cc \
+# ppapi/proxy/host_var_serialization_rules.cc \
+# ppapi/proxy/interface_proxy.cc \
+# ppapi/proxy/plugin_dispatcher.cc \
+# ppapi/proxy/plugin_resource.cc \
+# ppapi/proxy/plugin_resource_tracker.cc \
+# ppapi/proxy/plugin_var_serialization_rules.cc \
+# ppapi/proxy/plugin_var_tracker.cc \
+# ppapi/proxy/ppapi_messages.cc \
+# ppapi/proxy/ppb_buffer_proxy.cc \
+# ppapi/proxy/ppb_char_set_proxy.cc \
+# ppapi/proxy/ppb_cursor_control_proxy.cc \
+# ppapi/proxy/ppb_flash_proxy.cc \
+# ppapi/proxy/ppb_font_proxy.cc \
+# ppapi/proxy/ppb_fullscreen_proxy.cc \
+# ppapi/proxy/ppb_graphics_2d_proxy.cc \
+# ppapi/proxy/ppb_image_data_proxy.cc \
+# ppapi/proxy/ppb_instance_proxy.cc \
+# ppapi/proxy/ppb_pdf_proxy.cc \
+# ppapi/proxy/ppb_url_request_info_proxy.cc \
+# ppapi/proxy/ppb_url_response_info_proxy.cc \
+# ppapi/proxy/ppb_var_deprecated_proxy.cc \
+# ppapi/proxy/ppp_class_proxy.cc \
+# ppapi/proxy/ppp_instance_proxy.cc \
+
+# ppapi/proxy/ppapi_param_traits.cc COMPILE_ERROR
+# ppapi/proxy/ppb_core_proxy.cc COMPILE_ERROR
+# ppapi/proxy/ppb_testing_proxy.cc COMPILE_ERROR
+# ppapi/proxy/ppb_url_loader_proxy.cc COMPILE_ERROR
+# ppapi/proxy/serialized_var.cc COMPILE_ERROR
+
+# base/condition_variable_unittest.cc HANGS
+# base/lazy_instance_unittest.cc LINK_ERROR
+# base/lock_unittest.cc HANGS
+# base/logging_unittest.cc COMPILE_ERROR
+# base/thread_local_unittest.cc LINK_ERROR
+# base/thread_local_storage_unittest.cc LINK_ERROR
+# base/time_unittest.cc CRASH
+# base/waitable_event_unittest.cc CRASH
+# base/thread_unittest.cc CRASH
+
 # Requires MessageLoop
 #          base/waitable_event_watcher_unittest.cc \
 #          base/message_loop_unittest.cc \
@@ -171,9 +214,17 @@ CFLAGS = -Wall -Wno-long-long -pthread -DXP_UNIX -Werror -DUNIT_TEST
 TESTING_INCLUDES = -I$(CURDIR)/testing/gtest \
                    -I$(CURDIR)/testing/gtest/include \
                    -I$(CURDIR)/testing/gmock/include
+
+PPAPI_INCLUDES = -I$(CURDIR)/ppapi/c \
+                 -I$(CURDIR)/ppapi/c/dev \
+                 -I$(CURDIR)/ppapi/c/trusted \
+                 -I$(CURDIR)/ppapi/proxy
+
 INCLUDES = -I$(CURDIR) \
            -I$(NACL_SDK_ROOT) \
+           $(PPAPI_INCLUDES) \
            $(TESTING_INCLUDES)
+
 LDFLAGS = -lgoogle_nacl_imc \
           -lgoogle_nacl_npruntime \
           -lpthread \
