@@ -44,7 +44,7 @@ NACL_TOOLCHAIN_DIR = toolchain/$(PLATFORM)_$(TARGET)
 CC = $(NACL_SDK_ROOT)/$(NACL_TOOLCHAIN_DIR)/bin/nacl-gcc
 CPP = $(NACL_SDK_ROOT)/$(NACL_TOOLCHAIN_DIR)/bin/nacl-g++
 
-LDR ?= $(NACL_SDK_ROOT)/$(NACL_TOOLCHAIN_DIR)/bin/sel_ldr
+LDR ?= $(NACL_SDK_ROOT)/$(NACL_TOOLCHAIN_DIR)/bin/nacl-sel_ldr
 
 %_x86_32.o: %.c
 	$(CC) $(CFLAGS) -m32 $(INCLUDES) $(OPT_FLAGS) -c -o $@ $<

@@ -91,21 +91,14 @@ BASE_FILES = \
           base/waitable_event_posix.cc \
           base/waitable_event_watcher_posix.cc \
           base/weak_ptr.cc \
+          base/waitable_event_unittest.cc \
+          base/condition_variable_unittest.cc \
+          base/thread_local_unittest.cc \
+          base/lazy_instance_unittest.cc \
+          base/thread_local_storage_unittest.cc \
 
 # Crashes...
 #          base/message_loop_unittest.cc \
-
-# WaitableEventTest.WaitMany hits a DCHECK in LockImpl::Unlock
-# because the pthread_mutex_unlock is returning 1 (EPERM)
-#          base/waitable_event_unittest.cc \
-# very similar DCHECK hit in ConditionVariableTest.MultiThreadConsumerTest:
-#          base/condition_variable_unittest.cc \
-# very similar DCHECK hit on ThreadLocalTest.Pointer:
-#          base/thread_local_unittest.cc \
-# very similar DCHECK hit on LazyInstanceTest.ConstructorThreadSafety:
-#          base/lazy_instance_unittest.cc \
-# very similar DCHECK hit on ThreadLocalStorageTest.TLSDestructors:
-#          base/thread_local_storage_unittest.cc \
 
 # ThreadTest.Restart expects an AtExitManager, but it's unclear who is supposed to provide one.
 # [1114/202650:FATAL:base/at_exit.cc(40)] Check failed: false. Tried to RegisterCallback without an AtExitManager
