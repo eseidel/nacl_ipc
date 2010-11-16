@@ -96,21 +96,14 @@ BASE_FILES = \
           base/thread_local_unittest.cc \
           base/lazy_instance_unittest.cc \
           base/thread_local_storage_unittest.cc \
+          base/thread_unittest.cc \
+          base/message_loop_proxy_impl_unittest.cc \
 
-# Crashes...
+# Crashes with "** Fault in NaCl untrusted code"
+# Needs to be reduced, as that's likely a crash in SDK code.
 #          base/message_loop_unittest.cc \
-
-# ThreadTest.Restart expects an AtExitManager, but it's unclear who is supposed to provide one.
-# [1114/202650:FATAL:base/at_exit.cc(40)] Check failed: false. Tried to RegisterCallback without an AtExitManager
-          # base/thread_unittest.cc \
-
-# Depends on EnableTerminationOnHeapDestruction (in process_util)
-#          base/test/test_suite.cc \
-
-# Requires MessageLoop
+# Similar crash in WaitableEventWatcherTest.BasicSignal in "untrusted code"
 #          base/waitable_event_watcher_unittest.cc \
-#          base/message_loop_unittest.cc \
-#          base/message_loop_proxy_impl_unittest.cc \
 
 PPAPI_FILES = \
            ppapi/proxy/callback_tracker.cc \
