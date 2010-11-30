@@ -7,12 +7,18 @@
 #include <windows.h>
 
 #include "base/file_util.h"
+#include "base/thread_restrictions.h"
 #include "base/utf_string_conversions.h"
 
 namespace base {
 
-// static
-NativeLibrary LoadNativeLibrary(const FilePath& library_path) {
+typedef HMODULE (WINAPI* LoadLibraryFunction)(const wchar_t* file_name);
+
+NativeLibrary LoadNativeLibraryHelper(const FilePath& library_path,
+                                      LoadLibraryFunction load_library_api) {
+  // LoadLibrary() opens the file off disk.
+  base::ThreadRestrictions::AssertIOAllowed();
+
   // Switch the current directory to the library directory as the library
   // may have dependencies on DLLs in this directory.
   bool restore_directory = false;
@@ -25,11 +31,26 @@ NativeLibrary LoadNativeLibrary(const FilePath& library_path) {
     }
   }
 
-  HMODULE module = LoadLibrary(library_path.value().c_str());
+  HMODULE module = (*load_library_api)(library_path.value().c_str());
   if (restore_directory)
     file_util::SetCurrentDirectory(current_directory);
 
   return module;
+}
+
+// static
+NativeLibrary LoadNativeLibrary(const FilePath& library_path) {
+  return LoadNativeLibraryHelper(library_path, LoadLibraryW);
+}
+
+NativeLibrary LoadNativeLibraryDynamically(const FilePath& library_path) {
+  typedef HMODULE (WINAPI* LoadLibraryFunction)(const wchar_t* file_name);
+
+  LoadLibraryFunction load_library;
+  load_library = reinterpret_cast<LoadLibraryFunction>(
+      GetProcAddress(GetModuleHandle(L"kernel32.dll"), "LoadLibraryW"));
+
+  return LoadNativeLibraryHelper(library_path, load_library);
 }
 
 // static

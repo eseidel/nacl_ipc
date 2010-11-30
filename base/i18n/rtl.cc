@@ -44,22 +44,6 @@ namespace i18n {
 // Represents the locale-specific ICU text direction.
 static TextDirection g_icu_text_direction = UNKNOWN_DIRECTION;
 
-#if defined(OS_WIN)
-void GetLanguageAndRegionFromOS(std::string* lang, std::string* region) {
-  // Later we may have to change this to be OS-dependent so that
-  // it's not affected by ICU's default locale. It's all right
-  // to do this way because SetICUDefaultLocale is internal
-  // to this file and we know that it's not yet called when this function
-  // is called.
-  const icu::Locale& locale = icu::Locale::getDefault();
-  const char* language = locale.getLanguage();
-  const char* country = locale.getCountry();
-  DCHECK(language);
-  *lang = language;
-  *region = country;
-}
-#endif
-
 // Convert the ICU default locale to a string.
 std::string GetConfiguredLocale() {
   return GetLocaleString(icu::Locale::getDefault());
@@ -179,30 +163,27 @@ TextDirection GetFirstStrongCharacterDirection(const std::wstring& text) {
 }
 #endif
 
-bool AdjustStringForLocaleDirection(const string16& text,
-                                    string16* localized_text) {
-  if (!IsRTL() || text.empty())
+bool AdjustStringForLocaleDirection(string16* text) {
+  if (!IsRTL() || text->empty())
     return false;
 
   // Marking the string as LTR if the locale is RTL and the string does not
   // contain strong RTL characters. Otherwise, mark the string as RTL.
-  *localized_text = text;
-  bool has_rtl_chars = StringContainsStrongRTLChars(text);
+  bool has_rtl_chars = StringContainsStrongRTLChars(*text);
   if (!has_rtl_chars)
-    WrapStringWithLTRFormatting(localized_text);
+    WrapStringWithLTRFormatting(text);
   else
-    WrapStringWithRTLFormatting(localized_text);
+    WrapStringWithRTLFormatting(text);
 
   return true;
 }
 
 #if defined(WCHAR_T_IS_UTF32)
-bool AdjustStringForLocaleDirection(const std::wstring& text,
-                                    std::wstring* localized_text) {
-  string16 out;
-  if (AdjustStringForLocaleDirection(WideToUTF16(text), &out)) {
+bool AdjustStringForLocaleDirection(std::wstring* text) {
+  string16 temp = WideToUTF16(*text);
+  if (AdjustStringForLocaleDirection(&temp)) {
     // We should only touch the output on success.
-    *localized_text = UTF16ToWide(out);
+    *text = UTF16ToWide(temp);
     return true;
   }
   return false;

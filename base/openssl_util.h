@@ -2,13 +2,37 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef BASE_OPENNSSL_UTIL_H_
-#define BASE_OPENNSSL_UTIL_H_
+#ifndef BASE_OPENSSL_UTIL_H_
+#define BASE_OPENSSL_UTIL_H_
 #pragma once
 
 #include "base/basictypes.h"
+#include "base/tracked.h"
 
 namespace base {
+
+// A helper class that takes care of destroying OpenSSL objects when it goes out
+// of scope.
+template <typename T, void (*destructor)(T*)>
+class ScopedOpenSSL {
+ public:
+  ScopedOpenSSL() : ptr_(NULL) { }
+  explicit ScopedOpenSSL(T* ptr) : ptr_(ptr) { }
+  ~ScopedOpenSSL() { if (ptr_) (*destructor)(ptr_); }
+
+  T* get() const { return ptr_; }
+  void reset(T* ptr) {
+    if (ptr != ptr_) {
+      if (ptr_) (*destructor)(ptr_);
+      ptr_ = ptr;
+    }
+  }
+
+ private:
+  T* ptr_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedOpenSSL);
+};
 
 // Provides a buffer of at least MIN_SIZE bytes, for use when calling OpenSSL's
 // SHA256, HMAC, etc functions, adapting the buffer sizing rules to meet those
@@ -46,8 +70,42 @@ class ScopedOpenSSLSafeSizeBuffer {
   // Temporary buffer writen into in the case where the caller's
   // buffer is not of sufficient size.
   unsigned char min_sized_buffer_[MIN_SIZE];
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedOpenSSLSafeSizeBuffer);
+};
+
+// Initialize OpenSSL if it isn't already initialized. This must be called
+// before any other OpenSSL functions.
+// This function is thread-safe, and OpenSSL will only ever be initialized once.
+// OpenSSL will be properly shut down on program exit.
+void EnsureOpenSSLInit();
+
+// Drains the OpenSSL ERR_get_error stack. On a debug build the error codes
+// are send to VLOG(1), on a release build they are disregarded. In most
+// cases you should pass FROM_HERE as the |location|.
+void ClearOpenSSLERRStack(const tracked_objects::Location& location);
+
+// Place an instance of this class on the call stack to automatically clear
+// the OpenSSL error stack on function exit.
+class OpenSSLErrStackTracer {
+ public:
+  // Pass FROM_HERE as |location|, to help track the source of OpenSSL error
+  // messages. Note any diagnostic emitted will be tagged with the location of
+  // the constructor call as it's not possible to trace a destructor's callsite.
+  explicit OpenSSLErrStackTracer(const tracked_objects::Location& location)
+      : location_(location) {
+    EnsureOpenSSLInit();
+  }
+  ~OpenSSLErrStackTracer() {
+    ClearOpenSSLERRStack(location_);
+  }
+
+ private:
+  const tracked_objects::Location location_;
+
+  DISALLOW_IMPLICIT_CONSTRUCTORS(OpenSSLErrStackTracer);
 };
 
 }  // namespace base
 
-#endif  // BASE_NSS_UTIL_H_
+#endif  // BASE_OPENSSL_UTIL_H_

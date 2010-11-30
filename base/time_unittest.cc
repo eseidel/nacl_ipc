@@ -52,6 +52,19 @@ TEST(Time, TimeT) {
   EXPECT_EQ(0, Time::FromTimeT(0).ToInternalValue());
 }
 
+TEST(Time, FromExplodedWithMilliseconds) {
+  // Some platform implementations of FromExploded are liable to drop
+  // milliseconds if we aren't careful.
+  Time now = Time::NowFromSystemTime();
+  Time::Exploded exploded1 = {0};
+  now.UTCExplode(&exploded1);
+  exploded1.millisecond = 500;
+  Time time = Time::FromUTCExploded(exploded1);
+  Time::Exploded exploded2 = {0};
+  time.UTCExplode(&exploded2);
+  EXPECT_EQ(exploded1.millisecond, exploded2.millisecond);
+}
+
 TEST(Time, ZeroIsSymmetric) {
   Time zero_time(Time::FromTimeT(0));
   EXPECT_EQ(0, zero_time.ToTimeT());
@@ -123,12 +136,6 @@ TEST(TimeTicks, HighResNow) {
   // even if it doesn't work, it makes this entire test questionable.
   if (!TimeTicks::IsHighResClockWorking())
     return;
-#endif
-
-#if defined(OS_NACL)
-  // This test just hangs for NaCl.  Unclear why.  Skipping for now.
-  EXPECT_TRUE(false);
-  return;
 #endif
 
   // Why do we loop here?

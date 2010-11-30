@@ -14,12 +14,12 @@
 #if defined(OS_WIN)
 #include <windows.h>
 #elif defined(OS_MACOSX)
-#import <Carbon/Carbon.h>
+#import <CoreFoundation/CoreFoundation.h>
 #endif  // OS_*
 
 #include "base/string16.h"
 
-// Macro usefull for writing cross-platform function pointers.
+// Macro useful for writing cross-platform function pointers.
 #if defined(OS_WIN) && !defined(CDECL)
 #define CDECL __cdecl
 #else
@@ -53,6 +53,15 @@ typedef void* NativeLibrary;
 // Loads a native library from disk.  Release it with UnloadNativeLibrary when
 // you're done.
 NativeLibrary LoadNativeLibrary(const FilePath& library_path);
+
+#if defined(OS_WIN)
+// Loads a native library from disk.  Release it with UnloadNativeLibrary when
+// you're done.
+// This function retrieves the LoadLibrary function exported from kernel32.dll
+// and calls it instead of directly calling the LoadLibrary function via the
+// import table.
+NativeLibrary LoadNativeLibraryDynamically(const FilePath& library_path);
+#endif  // OS_WIN
 
 // Unloads a native library.
 void UnloadNativeLibrary(NativeLibrary library);

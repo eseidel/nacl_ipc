@@ -33,7 +33,6 @@
 #include "base/basictypes.h"
 #include "base/eintr_wrapper.h"
 #include "base/file_path.h"
-#include "base/lock.h"
 #include "base/logging.h"
 #include "base/scoped_ptr.h"
 #include "base/singleton.h"
@@ -132,7 +131,7 @@ int CountFilesCreatedAfter(const FilePath& path,
       // which are older than |comparison_time| are considered newer
       // (current implementation) 2. files newer than
       // |comparison_time| are considered older.
-      if (st.st_ctime >= comparison_time.ToTimeT())
+      if (static_cast<time_t>(st.st_ctime) >= comparison_time.ToTimeT())
         ++file_count;
     }
     closedir(dir);
@@ -372,6 +371,29 @@ bool ReadFromFD(int fd, char* buffer, size_t bytes) {
     total_read += bytes_read;
   }
   return total_read == bytes;
+}
+
+bool CreateSymbolicLink(const FilePath& target_path,
+                        const FilePath& symlink_path) {
+  DCHECK(!symlink_path.empty());
+  DCHECK(!target_path.empty());
+  return ::symlink(target_path.value().c_str(),
+                   symlink_path.value().c_str()) != -1;
+}
+
+bool ReadSymbolicLink(const FilePath& symlink_path,
+                      FilePath* target_path) {
+  DCHECK(!symlink_path.empty());
+  DCHECK(target_path);
+  char buf[PATH_MAX];
+  ssize_t count = ::readlink(symlink_path.value().c_str(), buf, arraysize(buf));
+
+  if (count <= 0)
+    return false;
+
+  *target_path = FilePath(FilePath::StringType(buf, count));
+
+  return true;
 }
 
 // Creates and opens a temporary file in |directory|, returning the
@@ -762,7 +784,7 @@ void MemoryMappedFile::CloseHandles() {
 
 bool HasFileBeenModifiedSince(const FileEnumerator::FindInfo& find_info,
                               const base::Time& cutoff_time) {
-  return find_info.stat.st_mtime >= cutoff_time.ToTimeT();
+  return static_cast<time_t>(find_info.stat.st_mtime) >= cutoff_time.ToTimeT();
 }
 
 bool NormalizeFilePath(const FilePath& path, FilePath* normalized_path) {
@@ -864,4 +886,4 @@ bool CopyFile(const FilePath& from_path, const FilePath& to_path) {
 }
 #endif  // defined(OS_MACOSX)
 
-} // namespace file_util
+}  // namespace file_util

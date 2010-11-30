@@ -4,7 +4,7 @@
 
 #include "base/base_paths_mac.h"
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #include <mach-o/dyld.h>
 
 #include "base/compiler_specific.h"
@@ -47,12 +47,13 @@ bool PathProviderMac(int key, FilePath* result) {
     case base::FILE_MODULE: {
       return GetNSExecutablePath(result);
     }
-    case base::DIR_USER_CACHE:
+    case base::DIR_CACHE:
       return mac_util::GetUserDirectory(NSCachesDirectory, result);
     case base::DIR_APP_DATA:
       return mac_util::GetUserDirectory(NSApplicationSupportDirectory, result);
     case base::DIR_SOURCE_ROOT: {
-      if (GetNSExecutablePath(result)) {
+      // Go through PathService to catch overrides.
+      if (PathService::Get(base::FILE_EXE, result)) {
         // Start with the executable's directory.
         *result = result->DirName();
         if (mac_util::AmIBundled()) {
