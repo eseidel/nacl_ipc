@@ -27,7 +27,10 @@ struct PPB_FileRef_Dev {
   // Returns the file system identifier of this file.
   PP_FileSystemType_Dev (*GetFileSystemType)(PP_Resource file_ref);
 
-  // Returns the name of the file.
+  // Returns the name of the file. The value returned by this function does not
+  // include any path component (such as the name of the parent directory, for
+  // example). It is just the name of the file. To get the full file path, use
+  // the GetPath() function.
   struct PP_Var (*GetName)(PP_Resource file_ref);
 
   // Returns the absolute path of the file.  This method fails if the file
@@ -75,15 +78,6 @@ struct PPB_FileRef_Dev {
   int32_t (*Rename)(PP_Resource file_ref,
                     PP_Resource new_file_ref,
                     struct PP_CompletionCallback callback);
-
-  // TODO(darin): Add these conversion routines.
-#if 0
-  // Convert a DOM File object to a FileRef object.
-  PP_Resource (*FromFileObject)(PP_Var file_object);
-
-  // Convert a FileRef object to a DOM File object.
-  PP_Var (*ToFileObject)(PP_Resource file_ref);
-#endif
 };
 
 #endif  // PPAPI_C_DEV_PPB_FILE_REF_DEV_H_

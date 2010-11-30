@@ -14,6 +14,7 @@
  */
 
 #include "ppapi/c/pp_bool.h"
+#include "ppapi/c/pp_macros.h"
 #include "ppapi/c/pp_stdint.h"
 #include "ppapi/c/pp_time.h"
 
@@ -153,6 +154,11 @@ struct PP_InputEvent {
   /** Identifies the type of the event. */
   PP_InputEvent_Type type;
 
+  /* Ensure the time_stamp is aligned on an 8-byte boundary relative to the
+     start of the struct. Some compilers align doubles on 8-byte boundaries
+     for 32-bit x86, and some align on 4-byte boundaries. */
+  int32_t padding;
+
   /**
    * When this event was generated. This is not relative to any particular
    * epoch, the most you can do is compare time stamps.
@@ -173,6 +179,7 @@ struct PP_InputEvent {
     char padding[64];
   } u;
 };
+PP_COMPILE_ASSERT_STRUCT_SIZE_IN_BYTES(PP_InputEvent, 80);
 
 /**
  * @}
