@@ -38,13 +38,15 @@ class Channel : public Message::Sender {
   enum Mode {
     MODE_NONE,
     MODE_SERVER,
-    MODE_CLIENT
+    MODE_CLIENT,
+    MODE_NAMED_SERVER,
+    MODE_NAMED_CLIENT
   };
 
   enum {
     // The maximum message size in bytes. Attempting to receive a
     // message of this size or bigger results in a channel error.
-    kMaximumMessageSize = 256 * 1024 * 1024,
+    kMaximumMessageSize = 128 * 1024 * 1024,
 
     // Ammount of data to read at once from the pipe.
     kReadBufferSize = 4 * 1024
