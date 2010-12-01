@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <spawn.h>
 
-int send_message(int nacl_socket, char* message, int length)
+int send_message(int nacl_socket, const char* message, int length)
 {
     struct iovec iov;
     bzero(&iov, sizeof(iov));
@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
     }
     const char* helloMessage = "Hello there!\n";
 
-    //send_message(nacl_socket, helloMessage, strlen(helloMessage))
+    //send_message(nacl_socket, helloMessage, strlen(helloMessage));
     receive_message(nacl_socket);
     return 0;
 }

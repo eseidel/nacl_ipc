@@ -28,5 +28,6 @@ void test_receive()
 int main(int argc, char** argv) {
     printf("Starting NaCl Process\n");
     test_send();
+    //test_receive();
     return 0;
 }
