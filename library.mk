@@ -1,0 +1,7 @@
+all: $(PROJECT_ROOT)/lib$(LIBRARY_NAME).a
+
+$(PROJECT_ROOT)/lib$(LIBRARY_NAME).a: $(OBJECTS) $(TEST_OBJECTS)
+	$(AR) cr $@ $^ 
+
+clean:
+	$(RM) $(OBJECTS) $(TEST_OBJECTS) $(PROJECT_ROOT)/lib$(LIBRARY_NAME).a
