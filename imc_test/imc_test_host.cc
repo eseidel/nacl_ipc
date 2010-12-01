@@ -42,6 +42,7 @@ int receive_message(int nacl_socket)
     msg.msg_iovlen = 1;
 
     int rc = recvmsg(nacl_socket, &msg, 0);
+    // For some reason we seem to be getting a msg structure in the iov??
     printf("Host Got: %i (%s)\n", rc, buffer);
     for (int x = 0; x < sizeof(buffer); x++) {
         printf("%i ", buffer[x]);
@@ -49,6 +50,7 @@ int receive_message(int nacl_socket)
     return rc;
 }
 
+// This function exists to rule out that the python code was doing the socket setup incorrectly.
 void launch_nacl(int child_socket)
 {
     pid_t child_pid = 0;
