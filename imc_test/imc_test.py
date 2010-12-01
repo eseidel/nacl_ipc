@@ -1,12 +1,24 @@
 #!/usr/bin/env python
 
+import os
 import subprocess
 import socket
+import sys
 
-sel_ldr_path = "/Projects/native_client/native_client/scons-out/opt-mac-x86-32/obj/src/trusted/service_runtime/sel_ldr"
-nexe_path = "imc_test.nexe"
 
 def main():
+    if len(sys.argv) < 2:
+        print "Usage: %s NEXE_PATH" % sys.argv[0]
+        sys.exit(1)
+
+    sel_ldr_path = os.getenv("LDR")
+    if not sel_ldr_path:
+        print "LDR environment variable required"
+        sys.exit(1)
+
+    nexe_path = sys.argv[1]
+    print "NEXE: %s" % nexe_path
+
     host_socket, nacl_socket = socket.socketpair(socket.AF_UNIX, socket.SOCK_DGRAM)
     nacl_app_imc_id = 10
 
@@ -22,7 +34,7 @@ def main():
         nexe_path
     ]
     host_args = [
-        "./a.out",
+        "./imc_test_host",
         "%s" % host_socket.fileno(),
     ]
     host_process = subprocess.Popen(host_args)
