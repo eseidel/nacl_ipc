@@ -91,7 +91,11 @@ int receive_message(int nacl_socket)
 void launch_nacl(int child_socket)
 {
     pid_t child_pid = 0;
-    const char* ldr_path = "/Projects/native_client/native_client/scons-out/opt-mac-x86-32/obj/src/trusted/service_runtime/sel_ldr";
+    const char* ldr_path = getenv("LDR");
+    if (!ldr_path) {
+        printf("LDR environment variable required\n");
+        exit(1);
+    }
     const char* nexe_path = "imc_test.nexe";
     const char* kChildIMCId = "10";
     char* imc_map_string;
