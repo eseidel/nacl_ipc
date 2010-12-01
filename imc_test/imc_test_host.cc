@@ -9,6 +9,40 @@
 #include <unistd.h>
 #include <spawn.h>
 
+namespace nacl {
+
+typedef int Handle; /** < PENDING: doc */
+const Handle kInvalidHandle(-1); /** < PENDING: doc */
+
+struct IOVec {
+  void*   base;
+  size_t  length;
+};
+const size_t kHandleCountMax = 8;   // TBD
+const int kMessageTruncated = 0x1;  /**< The trailing portion of a message was
+                                     *   discarded. */
+const int kHandlesTruncated = 0x2;  /**< Not all the handles were received. */
+
+struct MessageHeader {
+  IOVec*    iov;            /**< scatter/gather array */
+  uint32_t  iov_length;     /**< number of elements in iov */
+  Handle*   handles;        /**< array of handles to be transferred */
+  uint32_t  handle_count;   /**< number of handles in handles */
+  int       flags;
+};
+
+const int kDontWait = 0x1;  /**< Enables non-blocking operation */
+
+int SocketPair(Handle pair[2]);
+int SendDatagram(Handle socket, const MessageHeader* message, int flags);
+int Send(Handle socket, const void* buffer, size_t length, int flags);
+int ReceiveDatagram(Handle socket, MessageHeader* message, int flags);
+int Receive(Handle socket, void* buffer, size_t length, int flags);
+
+}  // namespace nacl
+
+using namespace nacl;
+
 int send_message(int nacl_socket, const char* message, int length)
 {
     struct iovec iov;
@@ -35,13 +69,16 @@ int receive_message(int nacl_socket)
     bzero(&iov, sizeof(iov));
     iov.iov_base = buffer;
     iov.iov_len  = sizeof(buffer);
-
+    
     struct msghdr msg;
     bzero(&msg, sizeof(msg));
     msg.msg_iov = &iov;
     msg.msg_iovlen = 1;
-
+    
     int rc = recvmsg(nacl_socket, &msg, 0);
+
+    printf("Host waiting\n");
+    //int rc = Receive(nacl_socket, buffer, 80, kDontWait);
     // For some reason we seem to be getting a msg structure in the iov??
     printf("Host Got: %i (%s)\n", rc, buffer);
     for (int x = 0; x < sizeof(buffer); x++) {
@@ -67,17 +104,19 @@ void launch_nacl(int child_socket)
 int main(int argc, char** argv) {
     printf("Starting Host Process\n");
     int nacl_socket;
-    if (argc > 1)
+    if (argc > 1) {
         nacl_socket = strtol(argv[1], 0, 0);
-    else {
+        printf("Using pre-launched nacl on socket: %i\n", nacl_socket);
+    } else {
         int fds[2];
-        socketpair(AF_UNIX, SOCK_DGRAM, 0, fds);
+        int rc = SocketPair(fds);
+        printf("Created socket pair.  rc= %i\n", rc);
         nacl_socket = fds[0];
         launch_nacl(fds[1]);
     }
     const char* helloMessage = "Hello there!\n";
-
     //send_message(nacl_socket, helloMessage, strlen(helloMessage));
+
     receive_message(nacl_socket);
     return 0;
 }

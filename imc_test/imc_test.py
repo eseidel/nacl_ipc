@@ -37,9 +37,8 @@ def main():
         "./imc_test_host",
         "%s" % host_socket.fileno(),
     ]
-    host_process = subprocess.Popen(host_args)
     nacl_process = subprocess.Popen(nacl_args)
-
+    host_process = subprocess.Popen(host_args)
 
 if __name__ == "__main__":
     main()
