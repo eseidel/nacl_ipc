@@ -4,17 +4,20 @@ import subprocess
 import socket
 
 sel_ldr_path = "/Projects/native_client/native_client/scons-out/opt-mac-x86-32/obj/src/trusted/service_runtime/sel_ldr"
-nexe_path = "imc_test_x86_32.nexe"
+nexe_path = "imc_test.nexe"
 
 def main():
     our_socket, their_socket = socket.socketpair(socket.AF_UNIX, socket.SOCK_DGRAM)
-    
+    nacl_app_imc_id = 10
+
+    # This example matches http://www.chromium.org/nativeclient/life-of-sel_ldr
     args = [
         sel_ldr_path,
+        "-v", "-v",
         "-i",
-        "%s:%s" % (our_socket.fileno(), 10),
-        "-X",
-        "10",
+        "%s:%s" % (nacl_app_imc_id, their_socket.fileno()),
+        # "-X",
+        # "%s" % nacl_app_imc_id,
         "--",
         nexe_path
     ]

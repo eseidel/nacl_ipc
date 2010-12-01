@@ -3,10 +3,16 @@
 // found in the LICENSE file.
 
 #include <stdio.h>
-#include <sys/nacl_syscalls.h>
+#include <nacl/nacl_imc.h>
+
+using namespace nacl;
+
+const Handle kSocketToHost = 10;
 
 int main(int argc, char** argv) {
-    // int foo = imc_connect(10);
-    // printf("connect: %i\n\n", foo);
+    printf("Foo\n");
+    char buffer[100];
+    int rc = Receive(kSocketToHost, buffer, 100, kDontWait);
+    printf("Receive: %i\n\n", rc);
     return 0;
 }
