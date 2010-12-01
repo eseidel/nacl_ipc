@@ -145,8 +145,7 @@ uint64 TickCount() {
   return mach_absolute_time();
 #elif defined(OS_NACL)
   // NaCl sadly does not have _POSIX_TIMERS enabled in sys/features.h
-  // Apparently NaCl only has CLOCK_REALTIME:
-  // http://code.google.com/p/nativeclient/issues/detail?id=1159
+  // So we have to use clock() for now.
   return clock();
 #elif defined(OS_POSIX)
   struct timespec ts;
@@ -172,11 +171,7 @@ void DeleteFilePath(const PathString& log_name) {
 #if defined(OS_WIN)
   DeleteFile(log_name.c_str());
 #else
-#if defined(OS_NACL)
-  CHECK(false);
-#else
   unlink(log_name.c_str());
-#endif
 #endif
 }
 
