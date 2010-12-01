@@ -145,8 +145,8 @@ MessageLoop::MessageLoop(Type type)
 #elif defined(OS_NACL)
 // Currently NaCl doesn't have a UI or an IO MessageLoop.
 // TODO(abarth): Figure out if we need these.
-#define MESSAGE_PUMP_UI NULL;
-#define MESSAGE_PUMP_IO NULL;
+#define MESSAGE_PUMP_UI NULL
+#define MESSAGE_PUMP_IO NULL
 #elif defined(OS_POSIX)  // POSIX but not MACOSX.
 #define MESSAGE_PUMP_UI new base::MessagePumpForUI()
 #define MESSAGE_PUMP_IO new base::MessagePumpLibevent()
