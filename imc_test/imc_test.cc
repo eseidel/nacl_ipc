@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <stdio.h>
+#include <string.h>
 #include <nacl/nacl_imc.h>
 
 using namespace nacl;
@@ -11,8 +12,8 @@ const Handle kSocketToHost = 10;
 
 int main(int argc, char** argv) {
     printf("Foo\n");
-    char buffer[100];
-    int rc = Receive(kSocketToHost, buffer, 100, kDontWait);
-    printf("Receive: %i\n\n", rc);
+    const char* buffer = "This is a test\n";
+    int rc = Send(kSocketToHost, buffer, strlen(buffer), kDontWait);
+    printf("Send: %i\n\n", rc);
     return 0;
 }

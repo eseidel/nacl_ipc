@@ -13,7 +13,7 @@ def main():
     # This example matches http://www.chromium.org/nativeclient/life-of-sel_ldr
     args = [
         sel_ldr_path,
-        "-v", "-v",
+        # "-v", "-v",
         "-i",
         "%s:%s" % (nacl_app_imc_id, their_socket.fileno()),
         # "-X",
@@ -23,7 +23,7 @@ def main():
     ]
     print args
     p = subprocess.Popen(args)
-    their_socket.send("Test")
+    print our_socket.recv(100)
 
 if __name__ == "__main__":
     main()
