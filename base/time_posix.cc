@@ -65,18 +65,18 @@ Time Time::NowFromSystemTime() {
 // NaCl doesn't have timegm, so we use this hack for now.
 // http://code.google.com/p/nativeclient/issues/detail?id=1160
 static time_t my_timegm (struct tm *tm) {
-    time_t ret;
-    char *tz;
-    tz = getenv("TZ");
-    setenv("TZ", "", 1);
-    tzset();
-    ret = mktime(tm);
-    if (tz)
-        setenv("TZ", tz, 1);
-    else
-        unsetenv("TZ");
-    tzset();
-    return ret;
+  time_t ret;
+  char *tz;
+  tz = getenv("TZ");
+  setenv("TZ", "", 1);
+  tzset();
+  ret = mktime(tm);
+  if (tz)
+    setenv("TZ", tz, 1);
+  else
+    unsetenv("TZ");
+  tzset();
+  return ret;
 }
 #endif
 

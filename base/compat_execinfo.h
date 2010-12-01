@@ -27,7 +27,7 @@ extern void backtrace_symbols_fd(void* const*, int, int)
     __attribute__((weak_import));
 
 }  // extern "C"
-#else
+#elif !defined(OS_NACL)
 #include <execinfo.h>
 #endif
 

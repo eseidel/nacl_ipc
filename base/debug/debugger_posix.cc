@@ -30,6 +30,7 @@
 #include <iostream>
 
 #include "base/basictypes.h"
+#include "base/compat_execinfo.h"
 #include "base/eintr_wrapper.h"
 #include "base/logging.h"
 #include "base/safe_strerror_posix.h"
