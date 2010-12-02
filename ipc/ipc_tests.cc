@@ -57,7 +57,7 @@ void IPCChannelTest::TearDown() {
   MultiProcessTest::TearDown();
 }
 
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_NACL)
 base::ProcessHandle IPCChannelTest::SpawnChild(ChildType child_type,
                                                IPC::Channel *channel) {
   // kDebugChildren support.

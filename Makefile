@@ -1,12 +1,5 @@
 .PHONY: all clean
 
-MODULES = base \
-          ipc \
-          ppapi \
-          testing \
-
-LIBRARIES = $(MODULES:%=lib%.a)
-
 OBJECTS = hello_world.o \
 
 LDFLAGS = -lgoogle_nacl_imc \
@@ -21,28 +14,16 @@ PROJECT_NAME = hello_world
 all: $(PROJECT_NAME).nexe
 
 include common.mk
+include ipc/ipc.mk
+include base/base.mk
+include ppapi/ppapi.mk
+include testing/testing.mk
 
-libbase.a:
-	cd base; make
-
-libipc.a:
-	cd ipc; make
-
-libppapi.a:
-	cd ppapi; make
-
-libtesting.a:
-	cd testing; make
-
-$(PROJECT_NAME).nexe: $(OBJECTS) $(LIBRARIES)
-	$(CPP) $^ $(LDFLAGS) -m32 -o $@ $(LIBRARIES)
+$(PROJECT_NAME).nexe: $(OBJECTS) $(TEST_OBJECTS)
+	$(CPP) $^ $(LDFLAGS) -m32 -o $@
 
 run: $(PROJECT_NAME).nexe
 	$(LDR) -- $(PROJECT_NAME).nexe
 
 clean:
-	$(RM) $(OBJECTS) $(PROJECT_NAME).nexe
-	cd base; make clean
-	cd ipc; make clean
-	cd ppapi; make clean
-	cd testing; make clean
+	$(RM) $(OBJECTS) $(TEST_OBJECTS) $(PROJECT_NAME).nexe
